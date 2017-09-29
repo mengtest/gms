@@ -33,7 +33,8 @@
 
 	if($_POST[submitquery]){
 		$conn = GetDBByIndex($_SESSION[DBIndex]);
-		if ($conn == null || $_SESSION[DBIndex] <= 0) {
+		$serverId = GetServerId($_SESSION[DBIndex]);
+		if ($conn == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
 			alertMsg("请先选择服再操作");
 			exit();
 		}
@@ -42,7 +43,7 @@
 		$playername = $_POST[playername] != null ? $_POST[playername] : '';
 		$account = $_POST[account] != null ? $_POST[account] : '';
 
-		$sql = "select * from charfulldata where worldid = $_SESSION[DBIndex] and ($playerguid = 0 or guid = $playerguid) and ('$playername' = '' or charname = '$playername') and ('$account' = '' or accname = '$account')";
+		$sql = "select * from charfulldata where worldid = $serverId and ($playerguid = 0 or guid = $playerguid) and ('$playername' = '' or charname = '$playername') and ('$account' = '' or accname = '$account')";
 		$query = mysqli_query($conn, $sql);
 
 		while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {

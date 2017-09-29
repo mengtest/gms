@@ -48,7 +48,8 @@
 
 	if($_POST[submitItem]){
 		$conns = GetDBByIndex($_SESSION[DBIndex]);
-		if ($conn == null || $conns == null || $_SESSION[DBIndex] <= 0) {
+		$serverId = GetServerId($_SESSION[DBIndex]);
+		if ($conn == null || $conns == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
 			alertMsg("请先选择服再操作");
 			exit();
 		}
@@ -64,7 +65,7 @@
 			$playinfo = $_POST[playerguid].'-';
 
 			//$sqlguid = $sqls;
-			$sqlinc = "('$_SESSION[DBIndex]', '1', 'itemlist,$_POST[iteminfo]', ";
+			$sqlinc = "('$serverId', '1', 'itemlist,$_POST[iteminfo]', ";
 			$guidArr = explode(",", $_POST[playerguid]);
 			for ($i = 0; $i < count($guidArr); $i++) {
 				if ($i > 0) {
@@ -79,7 +80,7 @@
 		if ($_POST[playername] != null) {
 			$playinfo = $playinfo.$_POST[playername];
 
-			$sqlinc2 = "('$_SESSION[DBIndex]', '2', 'itemlist,$_POST[iteminfo]', ";
+			$sqlinc2 = "('$serverId', '2', 'itemlist,$_POST[iteminfo]', ";
 			if ($_POST[playerguid] != null) {
 				$sqls = $sqls.",";
 			}
@@ -98,7 +99,7 @@
 		if ($playinfo != null) {
 			mysqli_query($conns, $sqls);
 
-			OnRecordOption($_SESSION[name], '发放物品-'.$_POST[iteminfo], $_SESSION[DBIndex], $playinfo);
+			OnRecordOption($_SESSION[name], '发放物品-'.$_POST[iteminfo], $serverId, $playinfo);
 		}
 	}
 

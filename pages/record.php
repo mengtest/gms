@@ -34,33 +34,5 @@
 
 
 <?php
-	if($_POST[submitcommand]){
-		$conn = GetDBByIndex($_POST[serverid]);
-		if ($conn == null) {
-			exit();
-		}
-
-		$sql = "insert into gmcommand(worldid, type, command, param) values('$_POST[serverid]', '$_POST[type]', '$_POST[command]', '$_POST[param]')";
-		mysqli_query($conn, $sql);
-
-		if ($_POST[type] == 1) {
-			OnRecordOptionGuid($_SESSION[name], 'GM命令-'.$_POST[command], $_POST[serverid], $_POST[param]);
-		}
-		else {
-			OnRecordOption($_SESSION[name], 'GM命令-'.$_POST[command], $_POST[serverid], $_POST[param]);
-		}
-		header("Location: #");
-	}
-
-	if($_POST[submitcommand2]){
-		if ($_SESSION[DBIndex] != $_POST[serverid]) {
-			$conn = GetDBByIndex($_POST[serverid]);
-			if ($conn != null) {
-				$_SESSION[DBIndex] = $_POST[serverid];
-				header("Location: #");
-			}
-		}
-	}
-
 	require_once("../html/bottom.html");
 ?>

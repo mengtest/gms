@@ -28,11 +28,6 @@
 
 <hr class = 'command_hr' />
 
-<!--<form action="" method="post" class = 'command_form2'>
-	筛选服id：<input name="serverid" type="text" />
- 	<input name="submitcommand2" type="submit" value="选择" />
-</form>-->
-
 <table width = '100%' class = 'command_table'>
 	<tr><th>服id</th><th>类型</th><th>命令</th><th>参数</th></tr>
 	<?php
@@ -46,10 +41,11 @@
 			GetGMCommandInfo($_SESSION[DBIndex]);
 		}
 
-		function GetGMCommandInfo($sid) {
-			$conn = GetDBByIndex($sid);
+		function GetGMCommandInfo($sIndex) {
+			$conn = GetDBByIndex($sIndex);
+			$serverId = GetServerId($_SESSION[DBIndex]);
 			if ($conn != null) {
-				$sql = "select * from gmcommand where worldid = '$sid'";
+				$sql = "select * from gmcommand where worldid = '$serverId'";
 				$query = mysqli_query($conn, $sql);
 				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
 					echo "<tr><th>$row[worldid]</th><th>$row[type]</th><th>$row[command]</th><th>$row[param]</th></tr>";
@@ -65,33 +61,24 @@
 <?php
 	if($_POST[submitcommand]){
 		$conn = GetDBByIndex($_SESSION[DBIndex]);
-		if ($conn == null || $_SESSION[DBIndex] <= 0) {
+		$serverId = GetServerId($_SESSION[DBIndex]);
+		if ($conn == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
 			alertMsg("请先选择服再操作");
 		}
 		else {
-			$sql = "insert into gmcommand(worldid, type, command, param) values('$_SESSION[DBIndex]', '$_POST[type]', '$_POST[command]', '$_POST[param]')";
+			$sql = "insert into gmcommand(worldid, type, command, param) values('$serverId', '$_POST[type]', '$_POST[command]', '$_POST[param]')";
 			mysqli_query($conn, $sql);
 		
 			if ($_POST[type] == 1) {
-				OnRecordOptionGuid($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
+				OnRecordOptionGuid($_SESSION[name], 'GM命令-'.$_POST[command], $serverId, $_POST[param]);
 			}
 			else {
-				OnRecordOption($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
+				OnRecordOption($_SESSION[name], 'GM命令-'.$_POST[command], $serverId, $_POST[param]);
 			}
 
 			echo "<script language = 'JavaScript'> location.reload() ; </script>";
 		}
 	}
-
-	/*if($_POST[submitcommand2]){
-		if ($_SESSION[DBIndex] != $_POST[serverid]) {
-			$conn = GetDBByIndex($_POST[serverid]);
-			if ($conn != null) {
-				$_SESSION[DBIndex] = $_POST[serverid];
-				header("Location: #");
-			}
-		}
-	}*/
 
 	require_once("../html/bottom.html");
 ?>

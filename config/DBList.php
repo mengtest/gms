@@ -15,20 +15,20 @@
 			}
 			break;
 
-			case 100:
+			case 1:
 			{
 				$conn = mysqli_connect('localhost','root','root');
 				mysqli_select_db($conn, '3dmmo');
 			}
 			break;
 
-			case 106:
-			case 107:
-			case 108:
-			case 109:
-			case 110:
-			case 111:
-			case 117:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
 			{
 				$conn = mysqli_connect('192.168.1.117','root','root');
 				mysqli_select_db($conn, 'mtlbbdb_100');
@@ -46,55 +46,99 @@
 		return $conn;
 	}
 
+	// 获取游戏服id
+	function GetServerId($index) {
+		$serverId = -1;
+
+		switch ($index) {
+			case 1:
+				$serverId = 100;
+				break;
+
+			case 2:
+				$serverId = 106;
+				break;
+
+			case 3:
+				$serverId = 107;
+				break;
+
+			case 4:
+				$serverId = 108;
+				break;
+
+			case 5:
+				$serverId = 109;
+				break;
+
+			case 6:
+				$serverId = 110;
+				break;
+
+			case 7:
+				$serverId = 111;
+				break;
+
+			case 8:
+				$serverId = 117;
+				break;
+			
+			default:
+				break;
+		}
+
+		return $serverId;
+	}
+
 	// 服列表
 	$serverList = array(
 		'本地服0' => array(
-			100 => 's100(本地)',
-			117 => 's117(内网)', 
+			1 => 's100(本地)',
+			8 => 's117(内网)', 
 			), 
 		'本地服1' => array(
-			106 => 's106(内网)',
-			107 => 's107(内网)', 
+			2 => 's106(内网)',
+			3 => 's107(内网)', 
 			), 
 		'本地服2' => array(
-			108 => 's108(内网)',
-			109 => 's109(内网)', 
+			4 => 's108(内网)',
+			5 => 's109(内网)', 
 			), 
 		'本地服3' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服4' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服5' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服6' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服7' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服8' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服9' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服10' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		'本地服11' => array(
-			110 => 's110(内网)',
-			111 => 's111(内网)', 
+			6 => 's110(内网)',
+			7 => 's111(内网)', 
 			), 
 		);
 ?>
