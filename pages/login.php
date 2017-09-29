@@ -44,7 +44,6 @@
 				$_SESSION[uid] = $row[uid];
 				$_SESSION[name] = $row[username];
 
-				alertMsg("登录成功");
 				header("Location: ../index.php");
 			}
 			else {

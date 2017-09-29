@@ -1,4 +1,9 @@
 <?php
+	if (visitLimit == null || visitLimit != 1)
+	{
+		exit("不可访问");
+	}
+
 	$absolute_path = dirname(__FILE__);
 	require_once("$absolute_path/CommomConfig.php");
 
