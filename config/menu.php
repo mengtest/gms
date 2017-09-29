@@ -11,20 +11,22 @@
 		$index_addr = host_addr;
 		echo "<li style = 'height: 10%;'><a href='$index_addr' class = 'menufixed'>主页</a></li>";
 
+		$page_addr = host_addr . 'pages/';
+
 		// 操作记录页
-		$record_addr = host_addr . 'script/record.php';
+		$record_addr = $page_addr . 'record.php';
 		echo "<li style = 'height: 10%;'><a href='$record_addr' class = 'menufixed'>操作记录</a></li>";
 
 		// 角色查询页
-		$query_addr = host_addr . 'script/queryPlayer.php';
+		$query_addr = $page_addr . 'queryPlayer.php';
 		echo "<li style = 'height: 10%;'><a href='$query_addr' class = 'menufixed'>查询角色</a></li>";
 
 		// 角色查询页
-		$item_addr = host_addr . 'script/sendItem.php';
+		$item_addr = $page_addr . 'sendItem.php';
 		echo "<li style = 'height: 10%;'><a href='$item_addr' class = 'menufixed'>发放物品</a></li>";
 
 		// GM命令
-		$gm_addr = host_addr . 'script/GMCommand.php';
+		$gm_addr = $page_addr . 'GMCommand.php';
 		echo "<li style = 'height: 10%;'><a href='$gm_addr' class = 'menufixed'>GM命令</a></li>";
 
 	echo "</ul></div>";

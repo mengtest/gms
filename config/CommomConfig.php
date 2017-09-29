@@ -3,10 +3,10 @@
 	define("MD5_encrypt", "test100");
 
 	// 定义主机地址
-	define("host_addr", 'http://localhost:8550/4/');
+	define("host_addr", 'http://localhost:8550/gms/');
 
 	// 定义热云地址
-	define("hotcloud_addr", 'http://localhost:8550/4/');
+	define("hotcloud_addr", 'http://localhost:8550/gms/');
 
 	// 定义每行显示平台数
 	define("plat_num", 3);

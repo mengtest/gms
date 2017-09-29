@@ -7,15 +7,15 @@
 	require_once("../config/menu.php");
 
 	// 检测登陆状态
-	require_once("check.php");
+	require_once("../script/check.php");
 	$checkVal = JurisdictionCheck(basename($_SERVER["PHP_SELF"]), $_SESSION[uid]);
 	if ($checkVal != 0) {
 		echo "<script language=javascript>alert('$error_notice[$checkVal]');history.back();</script>";
 	}
 
 	require_once("../config/DBList.php");
-	require_once("selectserver.php");
-	require_once("optionrecord.php");
+	require_once("../script/selectserver.php");
+	require_once("../script/optionrecord.php");
 ?>
 
 <form action="" method="post" class = 'item_form'>

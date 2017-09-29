@@ -14,5 +14,9 @@
 		echo "<a href='script/login.php' class='rightfixed'>登陆</a>";
 	}
 
+	echo "<div class = 'helper_div'>";
+	require_once("config/helper.html");
+	echo "</div>";
+
 	require_once("html/bottom.html");
 ?>
