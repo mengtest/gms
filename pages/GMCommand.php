@@ -4,6 +4,7 @@
 
 	$Title = "这里是GM命令页";
 	require_once("../html/header.html");
+	echo "<div class = 'shade_div'></div>";
 	require_once("../config/menu.php");
 
 	require_once("../script/check.php");

@@ -4,6 +4,7 @@
 
 	$Title = "这里是物品发放页";
 	require_once("../html/header.html");
+	echo "<div class = 'shade_div'></div>";
 	require_once("../config/menu.php");
 
 	// 检测登陆状态
