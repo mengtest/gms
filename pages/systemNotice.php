@@ -44,9 +44,6 @@
 </div>
 
 <?php
-	echo "<br>";
-	echo "<br>";
-	echo "<br>";
 	function SendNotice($db_index, $sql_front, $sql_end) {
 		// 无效的直接过滤
 		if ($db_index > 0 && $sql_front && $sql_end) {
@@ -59,6 +56,10 @@
 				mysqli_query($conn, $sql);
 			}
 		}
+	}
+
+	function SendOver() {
+		$_SESSION[select_list] = '';
 	}
 
 	if ($_POST[submitnotice]) {
@@ -78,7 +79,7 @@
 						}
 					}
 
-					$_SESSION[select_list] = '';
+					SendOver();
 				}
 				else {
 					$i = 2;
@@ -93,7 +94,7 @@
 						$i++;
 					}
 
-					$_SESSION[select_list] = '';
+					SendOver();
 				}
 			}
 			else {
@@ -106,7 +107,7 @@
 						SendNotice(substr($server_arr[$i], 1), $sqlFront, $sqlEnd);
 					}
 
-					$_SESSION[select_list] = '';
+					SendOver();
 				}
 				else {
 					alertMsg("请先选择通告服");
