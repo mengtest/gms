@@ -5,13 +5,14 @@
 	$Title = "这里是登陆页";
 	require_once("../html/header.html");
 	require_once("../config/menu.php");
+	require_once("../config/CommomConfig.php");
 
 	if ($_SESSION[uid] != null) {
-		header("Location: ../");
+		$reback_str = "<script language = 'JavaScript'> window.location.href='".host_addr."'; </script>";
+		echo $reback_str;
 		exit();
 	}
 
-	require_once("../config/CommomConfig.php");
 	require_once("../config/DBList.php");
 ?>
 
@@ -44,7 +45,8 @@
 				$_SESSION[uid] = $row[uid];
 				$_SESSION[name] = $row[username];
 
-				echo "<script language = 'JavaScript'> location.reload() ; </script>";
+				$echo_str = "<script language = 'JavaScript'> alert('登陆成功'); window.location.href='".host_addr."'; </script>";
+				echo $echo_str;
 			}
 			else {
 				alertMsg("用户名或密码错误");
