@@ -4,6 +4,6 @@
 
 	// 只要执行就销毁一次session(无论有无)
 	session_start();
-	header("Location: ../index.php");
+	header("Location: ../");
 	session_destroy();
 ?>

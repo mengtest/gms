@@ -7,7 +7,7 @@
 	require_once("../config/menu.php");
 
 	if ($_SESSION[uid] != null) {
-		header("Location: ../index.php");
+		header("Location: ../");
 		exit();
 	}
 
@@ -44,7 +44,7 @@
 				$_SESSION[uid] = $row[uid];
 				$_SESSION[name] = $row[username];
 
-				header("Location: ../index.php");
+				echo "<script language = 'JavaScript'> location.reload() ; </script>";
 			}
 			else {
 				alertMsg("用户名或密码错误");

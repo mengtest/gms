@@ -7,11 +7,11 @@
 	require_once("config/menu.php");
 
 	if ($_SESSION[name] != null) {
-		echo "<a href='pages/user.php' class='rightfixed2'>$_SESSION[name]</a>";
-		echo "<a href='pages/logout.php' class='rightfixed'>登出</a>";
+		echo "<a href='pages/user' class='rightfixed2'>$_SESSION[name]</a>";
+		echo "<a href='pages/logout' class='rightfixed'>登出</a>";
 	}
 	else {
-		echo "<a href='pages/login.php' class='rightfixed'>登陆</a>";
+		echo "<a href='pages/login' class='rightfixed'>登陆</a>";
 	}
 
 	echo "<div class = 'helper_div'>";

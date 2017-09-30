@@ -2,11 +2,6 @@
 	// 屏蔽提示
 	error_reporting(E_ALL || ~E_NOTICE);
 
-	if (visitLimit == null || visitLimit != 1)
-	{
-		exit("不可访问");
-	}
-
 	$absolute_path = dirname(dirname(__FILE__));
 
 	require_once("$absolute_path/config/CommomConfig.php");
