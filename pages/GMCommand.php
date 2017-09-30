@@ -70,13 +70,11 @@
 			mysqli_query($conn, $sql);
 		
 			if ($_POST[type] == 1) {
-				OnRecordOptionGuid($_SESSION[name], 'GM命令-'.$_POST[command], $serverId, $_POST[param]);
+				OnRecordOptionGuid($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
 			}
 			else {
-				OnRecordOption($_SESSION[name], 'GM命令-'.$_POST[command], $serverId, $_POST[param]);
+				OnRecordOption($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
 			}
-
-			echo "<script language = 'JavaScript'> location.reload() ; </script>";
 		}
 	}
 

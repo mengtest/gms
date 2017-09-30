@@ -9,17 +9,22 @@
 	// 设置默认时区为北京
 	date_default_timezone_set('PRC');
 
-	function OnRecordOption($userName, $option, $server, $player) {
+	function OnRecordOption($userName, $option, $serverindex, $player) {
 		// 这里不检测了，直接记录
 		$conn = GetDBByIndex(0);
 		if ($conn == null) {
 			exit();
 		}
 
-		$conn1 = GetDBByIndex($server);
+		$conn1 = GetDBByIndex($serverindex);
 		if ($conn1 == null) {
 			// 所选服不存在
 			exit("所选服不存在");
+		}
+
+		$server = GetServerId($serverindex);
+		if ($server <= 0) {
+			exit("所选服id不存在");
 		}
 
 		$time = date("Y/m/d h:i:sa");
@@ -28,16 +33,21 @@
 		mysqli_query($conn, $sql);
 	}
 
-	function OnRecordOptionGuid($userName, $option, $server, $guid) {
+	function OnRecordOptionGuid($userName, $option, $serverindex, $guid) {
 		$conn = GetDBByIndex(0);
 		if ($conn == null) {
 			exit();
 		}
 
-		$conn1 = GetDBByIndex($server);
+		$conn1 = GetDBByIndex($serverindex);
 		if ($conn1 == null) {
 			// 所选服不存在
 			exit("所选服不存在");
+		}
+
+		$server = GetServerId($serverindex);
+		if ($server <= 0) {
+			exit("所选服id不存在");
 		}
 
 		$sql1 = "select * from charfulldata where guid = '$guid'";

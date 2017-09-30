@@ -21,17 +21,17 @@
 -->
 <style>
 	body{ padding-bottom:50px;}
-	.bottomfixed{ position:fixed; left:0px; bottom:0px; width:100%; height:50px; background-color:#000; z-index:9999;}
+	.bottomfixed{ position:fixed; left:0px; bottom:0px; width:100%; height:20px; background-color:#FFFFFF; z-index:9999;}
 	.rightfixed{ position:fixed; left:88%; width:100%; height:100%;}
 	.rightfixed2{ position:fixed; left:84%; width:100%; height:100%;}
 	.rightfixed3{ position:fixed; left:80%; width:100%; height:100%;}
-	.centerfixed{ position:fixed; left:0%; width:100%; height:10%; }
+	.centerfixed{ position:fixed; left:0%; top:0%; width:100%; height:29%; background-color:#FFFFFF;}
 	.login_form{ position:fixed; left:45%; bottom:70%; width:100%; height:50px;}
 	.leftfixed{ position:fixed; left:10%; width:10%; height:100%; background-color:#7D7DFF;}
 	.menufixed{ position:fixed; left:13%; line-height:150%; font-size:30px; }
 	.server_list{ position:fixed; left:30%; bottom:80%; width:100%; height:50px; line-height:150%;}
 	.command_form{ position:fixed; left:45%; bottom:80%; width:100%; height:50px;}
-	.command_form2{ position:fixed; left:32%; bottom:65%; width:100%; height:50px;}
+	.command_form2{ position:fixed; left:32%; bottom:65%; width:100%; height:50px; background-color:#FFFFFF;}
 	.command_hr{ position:fixed; left:20%; bottom:70%; width:70%; color:#987cb9}
 	.command_table{ margin-left:22%; margin-top:14%; width:75%; z-index: 99; }
 	.query_form{ position:fixed; left:32%; bottom:65%; width:100%; height:50px;}
@@ -45,15 +45,17 @@
 	.userinfo_hr2{ position:fixed; left:20%; bottom:78%; width:70%; color:#987cb9}
 	.userinfo_hr3{ position:fixed; left:20%; bottom:62%; width:70%; color:#987cb9}
 	.userinfo_table{ position:fixed; left:20%; top:43%; width:70%; }
-	.record_table{ margin-left:20%; margin-top:5%; width:73%; z-index: 99; }
-	.hotcloud_fixed{ position:fixed; left:85%; width:100%; top:5%; background-color:#FFFFFF;}
-	.select_div{ position:fixed; left:28%; top:10%; width:55%; height:18%; background-color:#FFFFFF;}
+	.record_table{ margin-left:21%; margin-top:11%; width:72%; }
+	.hotcloud_fixed{ position:fixed; left:85%; width:100%; top:5%; }
+	.select_div{ position:fixed; left:28%; top:10%; width:55%; height:18%; }
 	.select_buttom{ position:fixed; left:75%; top:13%; width:3%; }
-	.server_fixed{ position:fixed; left:21%; top:8%; width:20%; background-color:#FFFFFF;}
+	.server_fixed{ position:fixed; left:21%; top:8%; width:20%; }
 	.item_hr{ position:fixed; left:20%; bottom:70%; width:70%; color:#987cb9; }
 	.item_table{margin-left:35%; margin-top:12%; width:55%; z-index: 99; }
 	.item_form{ position:fixed; left:22%; top:32%; width:20%; }
 	.helper_div{ margin-left:23%; margin-top:4%; width:63%; z-index: 99; }
+	.header_hr{position:fixed; left:10%; top:7%; width:80%; color:#987cb9; }
+	.shade_div{ position:fixed; left:0%; top:0%; width:100%; height:29%; background-color:#FFFFFF;}
 </style>
 
 <!--
@@ -62,12 +64,10 @@
 <body>
 	<div class = 'centerfixed'>
 		<h1 align="center"><?php echo $Title; ?></h1>
-	</div>
 
-	<br>
-	<br>
-	<br>
-	<hr width="80%" color=#987cb9 />
+		<hr class = 'header_hr' />
+	</div>
+	<br><br><br><br>
 
 <!--
 	通用脚本部分

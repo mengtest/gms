@@ -99,7 +99,7 @@
 		if ($playinfo != null) {
 			mysqli_query($conns, $sqls);
 
-			OnRecordOption($_SESSION[name], '发放物品-'.$_POST[iteminfo], $serverId, $playinfo);
+			OnRecordOption($_SESSION[name], '发放物品-'.$_POST[iteminfo], $_SESSION[DBIndex], $playinfo);
 		}
 	}
 
