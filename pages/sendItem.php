@@ -33,7 +33,7 @@
 
 <?php
 	$conn = GetDBByIndex(0);
-	echo "<table width = '100%' class = 'item_table'>
+	/*echo "<table width = '100%' class = 'item_table'>
 		<tr><th>操作者</th><th>发放内容</th><th>操作服</th><th>玩家信息</th><th>时间</th></tr>";
 		if ($conn != null) {
 			// 只查找发放物品的信息
@@ -45,7 +45,10 @@
 			}
 			mysqli_free_result($query);
 		}
-	echo "</table>";
+	echo "</table>";*/
+	$option_table = 'item_table';
+	$sql = "select * from option_record where `option` like '发放物品-%' order by id desc";
+	require_once("../script/optionTable.php");
 
 	if($_POST[submitItem]){
 		$conns = GetDBByIndex($_SESSION[DBIndex]);

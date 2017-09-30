@@ -16,10 +16,10 @@
 	require_once("../config/DBList.php");
 ?>
 
-<table width = '100%' class = 'record_table'>
-	<tr><th>名称</th><th>操作信息</th><th>操作服</th><th>玩家信息</th><th>时间</th></tr>
+<!--<table width = '100%' class = 'record_table'>
+	<tr><th>名称</th><th>操作信息</th><th>操作服</th><th>玩家信息</th><th>时间</th></tr>-->
 	<?php
-		$conn = GetDBByIndex(0);
+		/*$conn = GetDBByIndex(0);
 		if ($conn != null) {
 			$sql = "select * from option_record order by id desc";
 			$query = mysqli_query($conn, $sql);
@@ -28,11 +28,15 @@
 			}
 			mysqli_free_result($query);
 			mysqli_close($conn);
-		}
+		}*/
 	?>
-</table>
-
+<!--</table>-->
 
 <?php
+	$conn = GetDBByIndex(0);
+	$option_table = 'record_table';
+	$sql = "select * from option_record order by id desc";
+	require_once("../script/optionTable.php");
+
 	require_once("../html/bottom.html");
 ?>
