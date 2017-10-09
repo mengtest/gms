@@ -33,7 +33,8 @@
 			?>
 		</select><br/><br/><br/>
 		<table width="100%">
-			<tr>服务器号：<input name="notice_sid" type="text" value = "<?php echo $_SESSION[select_list]; ?>" style = "height:50px;width:85%" readonly/><tr><br/><br/><br/>
+			<tr>服务器号：<input name="notice_sid" id="my_notice_sid" type="text" value = "<?php echo $_SESSION[select_list]; ?>" style = "height:50px;width:75%" readonly/><tr>
+			&nbsp;<input name = 'submitreset' type = 'submit' value = '重新输入' /><br/><br/><br/>
 			<tr>内&nbsp;&nbsp;容：<input name="notice_content" type="text" style = "height:50px;width:85%" /></tr><br/><br/><br/>
 			<tr><th>开始时间：<input name="notice_time" type="text" title = "1.小于1亿的数(多少秒后通告);2.时间戳" /></th><th>发送条数：<input name="notice_count" type="text" /></th><th>执行间隔：<input name="notice_interval" type="text" /></th></tr>
 		</table><br/><br/>
@@ -58,10 +59,6 @@
 		}
 	}
 
-	function SendOver() {
-		$_SESSION[select_list] = '';
-	}
-
 	if ($_POST[submitnotice]) {
 		if ($_POST[notice_content] && $_POST[notice_time] >= 0 && $_POST[notice_interval] >= 0 && $_POST[notice_count] >= 0) {
 			$sqlFront = "insert into gmcommand(worldid, type, command, param) values('";
@@ -70,21 +67,19 @@
 			$sqlEnd .= ($_POST[notice_interval] ? $_POST[notice_interval].',' : '1,');
 			$sqlEnd .= ($_POST[notice_count] ? $_POST[notice_count]."')" : "1')");
 
-			if ($_POST[some]) {
+			if ($_POST[notice_some]) {
 				// 选了服或者平台,不读服务器号了
-				if ($_POST[some] == 0) {
+				if ($_POST[notice_some] == 0) {
 					foreach ($serverList as $plat => $idList) {
 						foreach ($idList as $serverid => $servername) {
 							SendNotice($serverid, $sqlFront, $sqlEnd);
 						}
 					}
-
-					SendOver();
 				}
 				else {
 					$i = 2;
 					foreach ($serverList as $plat => $idList) {
-						if ($_POST[some] == $i) {
+						if ($_POST[notice_some] == $i) {
 							foreach ($idList as $serverid => $servername) {
 								SendNotice($serverid, $sqlFront, $sqlEnd);
 							}
@@ -93,8 +88,6 @@
 
 						$i++;
 					}
-
-					SendOver();
 				}
 			}
 			else {
@@ -106,8 +99,6 @@
 					for ($i = 0; $i < count($server_arr); $i++) {
 						SendNotice(substr($server_arr[$i], 1), $sqlFront, $sqlEnd);
 					}
-
-					SendOver();
 				}
 				else {
 					alertMsg("请先选择通告服");
@@ -117,6 +108,12 @@
 		else {
 			alertMsg("请先输入通告信息");
 		}
+	}
+
+	if ($_POST[submitreset]) {
+		// 清除信息
+		$_SESSION[select_list] = '';
+		echo "<script language = 'JavaScript'> document.getElementById('my_notice_sid').value='';</script>";
 	}
 
 	require_once("../html/bottom.html");
