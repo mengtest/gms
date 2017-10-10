@@ -14,6 +14,9 @@
 	// 定义每页显示平台数(要是上面的倍数)
 	define("plat_page", 9);
 
+	// 定义最大vip等级
+	define("vip_max", 7);
+
 	// 定义错误信息
 	$error_notice = array(
 		0 => '成功', 

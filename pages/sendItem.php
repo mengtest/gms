@@ -22,7 +22,7 @@
 <form action="" method="post" class = 'item_form'>
  	<font align="center">guid(多个guid可用','隔开)</font><br />
  	<input name="playerguid" type="text" style="height:50px"/><br /><br />
- 	<font align="center">name(多个名称可用','隔开)</font><br />
+ 	<font align="center">name(多个名称可用' '隔开)</font><br />
  	<input name="playername" type="text" style="height:50px"/><br /><br />
  	<font align="center">item(银两,元宝,灵玉,银票,<br />itemId,num,isBind<br />后面还有物品可以用','隔开)</font><br />
  	<input name="iteminfo" type="text" style="height:50px"/><br />
@@ -89,7 +89,7 @@
 				$sqls = $sqls.",";
 			}
 
-			$nameArr = explode(",", $_POST[playername]);
+			$nameArr = explode(" ", $_POST[playername]);
 			for ($i = 0; $i < count($nameArr); $i++) {
 				if ($i > 0) {
 					$sqls = $sqls.','.$sqlinc2."'".$nameArr[$i]."')";

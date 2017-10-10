@@ -1,5 +1,17 @@
 <?php
-	// 获取数据库函数
+	/*
+	** 可以多个index对应一个数据库
+	** index唯一
+	** 每个index都必须对应一个ServerId(游戏服id)和一个名称(服列表)
+	** ServerId可以重复(必须大于0)
+	** ----------------------------------------------------------------------------------
+	** 增加一个新服:
+	** 1.index+1，绑定一个数据库(复制前面的就好了，对应修改数据库地址和用户名密码)
+	** 2.绑定一个ServerId(WorldId)
+	** 3.绑定一个服名称(显示用)
+	*/
+
+	// 获取数据库函数(1)
 	function GetDBByIndex($index) {
 		$conn = null;
 
@@ -46,7 +58,7 @@
 		return $conn;
 	}
 
-	// 获取游戏服id
+	// 获取游戏服id(2)
 	function GetServerId($index) {
 		$serverId = -1;
 
@@ -90,7 +102,7 @@
 		return $serverId;
 	}
 
-	// 服列表
+	// 服列表(3)
 	$serverList = array(
 		'本地服0' => array(
 			1 => 's100(本地)',

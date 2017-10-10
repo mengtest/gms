@@ -44,6 +44,7 @@
 			if ($ps) {
 				$_SESSION[uid] = $row[uid];
 				$_SESSION[name] = $row[username];
+				$_SESSION[Juri] = $row[jurisdiction];
 
 				$echo_str = "<script language = 'JavaScript'> alert('登陆成功'); window.location.href='".host_addr."'; </script>";
 				echo $echo_str;

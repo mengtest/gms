@@ -36,7 +36,7 @@
 			<tr>服务器号：<input name="notice_sid" id="my_notice_sid" type="text" value = "<?php echo $_SESSION[select_list]; ?>" style = "height:50px;width:75%" readonly/><tr>
 			&nbsp;<input name = 'submitreset' type = 'submit' value = '重新输入' /><br/><br/><br/>
 			<tr>内&nbsp;&nbsp;容：<input name="notice_content" type="text" style = "height:50px;width:85%" /></tr><br/><br/><br/>
-			<tr><th>开始时间：<input name="notice_time" type="text" title = "1.小于1亿的数(多少秒后通告);2.时间戳" /></th><th>发送条数：<input name="notice_count" type="text" /></th><th>执行间隔：<input name="notice_interval" type="text" /></th></tr>
+			<tr><td align="left">开始时间：<input name="notice_time" type="text" title = "1.小于1亿的数(多少秒后通告);2.时间戳" /></td><td>发送条数：<input name="notice_count" type="text" /></td><td>执行间隔：<input name="notice_interval" type="text" /></td></tr>
 		</table><br/><br/>
 		<div align = "center">
 			<input name = 'submitnotice' type = 'submit' value = '发送通告' />
