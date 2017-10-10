@@ -4,6 +4,7 @@
 
 	$Title = "这里是发送邮件页";
 	require_once("../html/header.html");
+	echo "<div class = 'shade_div2'></div>";
 	require_once("../config/menu.php");
 
 	// 检测登陆状态
@@ -81,20 +82,25 @@
 </div>
 
 <?php
+	$conn = GetDBByIndex(0);
+	$option_table = 'mail_record';
+	$sql = "select * from option_record where `option` like '单平台邮件-%' or `option` like '发送邮件-%' or `option` like '单服邮件-%' or `option` like '全平台邮件-%' order by id desc";
+	require_once("../script/optionTable.php");
+
 	function SendMail($server_index, $vip, $level, $mcontent, $mitem, $myinliang, $mlingyu, $myuanbao, $myinpiao, $time) {
-		$conn = GetDBByIndex($server_index);
+		$conns = GetDBByIndex($server_index);
 		$serverId = GetServerId($server_index);
-		if ($conn && $serverId > 0) {
-			$sql = "insert into gmcommand(worldid, type, command, param) values('$serverId', '6', 'gmmail,".$mcontent.",".$time.",".$myinliang.",".$mlingyu.",".$myuanbao.",".$myinpiao;
+		if ($conns && $serverId > 0) {
+			$sqls = "insert into gmcommand(worldid, type, command, param) values('$serverId', '6', 'gmmail,".$mcontent.",".$time.",".$myinliang.",".$mlingyu.",".$myuanbao.",".$myinpiao;
 
 			if ($mitem) {
-				$sql .= ",$mitem', '".$vip.",".$level."')";
+				$sqls .= ",$mitem', '".$vip.",".$level."')";
 			}
 			else {
-				$sql .= "', '".$vip.",".$level."')";
+				$sqls .= "', '".$vip.",".$level."')";
 			}
 
-			mysqli_query($conn, $sql);
+			mysqli_query($conns, $sqls);
 		}
 	}
 
@@ -137,9 +143,9 @@
 		}
 		else {
 			// 这里是发给单服玩家
-			$conn = GetDBByIndex($_SESSION[DBIndex]);
+			$conn1 = GetDBByIndex($_SESSION[DBIndex]);
 			$serverId = GetServerId($_SESSION[DBIndex]);
-			if ($conn == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
+			if ($conn1 == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
 				alertMsg("请先选择服再操作");
 			}
 			else {
@@ -151,7 +157,7 @@
 				}
 				else {
 					$plat_list = explode(" ", $_POST[player_name]);
-					$sql = "insert into gmcommand(worldid, type, command, param) values";
+					$sql1 = "insert into gmcommand(worldid, type, command, param) values";
 					$sqlinc = "('$serverId', '2', 'gmmail,".$_POST[mail_content].",".$time.",".$_POST[yinliang].",".$_POST[lingyu].",".$_POST[yuanbao].",0";
 					if ($_POST[items]) {
 						$sqlinc .= ",$_POST[items]', ";
@@ -162,14 +168,14 @@
 
 					for ($i = 0; $i < count($plat_list); $i++) {
 						if ($i > 0) {
-							$sql = $sql.','.$sqlinc."'".$plat_list[$i]."')";
+							$sql1 = $sql1.','.$sqlinc."'".$plat_list[$i]."')";
 						}
 						else {
-							$sql = $sql.$sqlinc."'".$plat_list[$i]."')";
+							$sql1 = $sql1.$sqlinc."'".$plat_list[$i]."')";
 						}
 					}
 
-					mysqli_query($conn, $sql);
+					mysqli_query($conn1, $sql1);
 
 					OnRecordOption($_SESSION[name], '发送邮件-'.$record_info, $_SESSION[DBIndex], $_POST[player_name]);
 				}
