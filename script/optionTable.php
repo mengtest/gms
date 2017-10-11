@@ -7,7 +7,7 @@
 			//$sql = "select * from option_record order by id desc";
 			$query = mysqli_query($conn, $sql);
 			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-				echo "<tr><th>$row[username]</th><th>$row[option]</th><th>$row[optionserver]</th><th>$row[player]</th><th>$row[time]</th></tr>";
+				echo "<tr><td>$row[username]</td><td>$row[option]</td><td>$row[optionserver]</td><td>$row[player]</td><td>$row[time]</td></tr>";
 			}
 			mysqli_free_result($query);
 		}
