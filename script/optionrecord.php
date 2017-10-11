@@ -27,9 +27,24 @@
 			exit("所选服id不存在");
 		}
 
+		$serverInfo = '';
+		foreach ($GLOBALS[serverList] as $plat => $serverListInfo) {
+			$finish = false;
+			foreach ($serverListInfo as $index => $serverName) {
+				if ($serverindex == $index) {
+					$serverInfo = $plat."-".$serverName;
+					$finish = true;
+					break;
+				}
+			}
+
+			if ($finish)
+				break;
+		}
+
 		$time = date("Y/m/d h:i:sa");
 
-		$sql = "insert into option_record(username, `option`, optionserver, player, time) value('$userName', '$option', '$server', '$player', '$time')";
+		$sql = "insert into option_record(username, `option`, optionserver, player, time) value('$userName', '$option', '$serverInfo', '$player', '$time')";
 		mysqli_query($conn, $sql);
 	}
 
@@ -60,9 +75,24 @@
 
 		$player = $row[charname];
 
+		$serverInfo = '';
+		foreach ($GLOBALS[serverList] as $plat => $serverListInfo) {
+			$finish = false;
+			foreach ($serverListInfo as $index => $serverName) {
+				if ($serverindex == $index) {
+					$serverInfo = $plat."-".$serverName;
+					$finish = true;
+					break;
+				}
+			}
+
+			if ($finish)
+				break;
+		}
+
 		$time = date("Y/m/d h:i:sa");
 
-		$sql2 = "insert into option_record(username, `option`, optionserver, player, time) value('$userName', '$option', '$server', '$player', '$time')";
+		$sql2 = "insert into option_record(username, `option`, optionserver, player, time) value('$userName', '$option', '$serverInfo', '$player', '$time')";
 		mysqli_query($conn, $sql2);
 	}
 
