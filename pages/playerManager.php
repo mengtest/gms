@@ -64,7 +64,7 @@
 
 <form action = '' method = 'post'>
 <table width = '100%' class = 'pm_table'>
-		<tr><td>账号</td><td>角色名</td><td>状态</td><td>到期时间</td><td>操作者-操作时间</td><td>操作内容</td><td>操作</td></tr>
+		<tr><th>账号</th><th>角色名</th><th>状态</th><th>到期时间</th><th>操作者-操作时间</th><th>操作内容</th><th>操作</th></tr>
 		<?php
 			$conn = GetDBByIndex($_SESSION[DBIndex]);
 			$serverId = GetServerId($_SESSION[DBIndex]);
