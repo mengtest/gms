@@ -16,43 +16,200 @@
 
 	require_once("../config/DBList.php");
 	require_once("../script/selectserver.php");
+	require_once("../script/optionrecord.php");
+
+	$someType = array(
+		1 => '角色名',
+		2 => '账号',
+		);
+
+	$typeName = array(
+		1 => '禁言',
+		2 => '封号',
+		3 => '踢下线',
+		);
 ?>
 
-<form action="" method="post" class = 'query_form'>
- 	<!--服id：<input name="serverid" type="text" /><br />-->
- 	Guid：<input name="playerguid" type="text" />
- 	名称：<input name="playername" type="text" />
- 	账号：<input name="account" type="text" />
- 	<input name="submitquery" type="submit" value="查询" />
+<hr class = 'pm_hr' />
+
+<form action="" method="post" class = 'pm_form'>
+ 	玩家：<select name='pm_some'>
+				<?php
+					foreach ($someType as $type => $name) {
+						echo "<option value = '$type'>$name</option>";
+					}
+				?>
+			</select>
+		<input name="pm_info" type="text" style="width:100px"/><br /><br />
+
+	操作：<select name='pm_some_op'>
+				<?php
+					foreach ($typeName as $type => $name) {
+						echo "<option value = '$type'>$name</option>";
+					}
+				?>
+			</select><br /><br />
+
+	时间：<input name="pm_time" type="text" /><br /><br />
+
+	原因：<input name="pm_reason" type="text" style="height:50px" /><br /><br />
+
+	<input name="submitpm" type="submit" value="提交" /><br /><br />
+
+	<p>1.禁言或者封号才需要填时间</p>
+	<p>2.时间的值小于当前时间戳<br>代表禁言(或封号)到n小时后</p>
+	<p>3.时间的值可以填写时间戳</p>
+	<p>4.原因必填(用于记录)</p>
 </form>
 
-<hr class = 'query_hr' />
+<form action = '' method = 'post'>
+<table width = '100%' class = 'pm_table'>
+		<tr><td>账号</td><td>角色名</td><td>状态</td><td>到期时间</td><td>操作</td></tr>
+		<?php
+			$conn = GetDBByIndex($_SESSION[DBIndex]);
+			$serverId = GetServerId($_SESSION[DBIndex]);
+			if ($conn && $_SESSION[DBIndex] > 0 && $serverId > 0) {
+				$now = time();
+				$sql = "select charname, accname, unblocktime, unforbidtalktime from charfulldata where worldid = '$serverId' and unblocktime > $now or unforbidtalktime > $now";
+
+				$query = mysqli_query($conn, $sql);
+				$unblockInfo = array();
+				$unforbidtalkInfo = array();
+
+				if (empty($_SESSION[unblocktime_index]) || $_SESSION[unblocktime_index] > 2000000000) {
+					$_SESSION[unblocktime_index] = 1;
+				}
+				$i = $_SESSION[unblocktime_index];
+
+				if (empty($_SESSION[unforbidtalktime_index]) || $_SESSION[unforbidtalktime_index] > 2000000000) {
+					$_SESSION[unforbidtalktime_index] = 1;
+				}
+				$j = $_SESSION[unforbidtalktime_index];
+
+				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					if ($row[unblocktime] > $now) {
+						$time = date("Y/m/d h:i:sa", $row[unblocktime]);
+						$subName = 'submitpmtb'.$i;
+						$unblockInfo[$i] = $row[charname];
+						echo "<tr><td>$row[accname]</td><td>$unblockInfo[$i]</td><td>封号中</td><td>$time</td><td><input name='$subName' type='submit' value='解除封号' /></td></tr>";
+						$i++;
+					}
+
+					if ($row[unforbidtalktime] > $now) {
+						$time = date("Y/m/d h:i:sa", $row[unforbidtalktime]);
+						$subName = 'submitpmtf'.$j;
+						$unforbidtalkInfo[$j] = $row[charname];
+						echo "<tr><td>$row[accname]</td><td>$unforbidtalkInfo[$j]</td><td>禁言中</td><td>$time</td><td><input name='$subName' type='submit' value='解除禁言' /></td></tr>";
+						$j++;
+					}
+				}
+			}
+		?>
+</table>
+</form>
 
 <?php
-	echo "<table width = '100%' class = 'query_table'>
-			<tr><th>服id</th><th>guid</th><th>玩家名</th><th>账号</th><th>职业</th><th>等级</th><th>VIP</th></tr>";
+	function SetState($conn, $serverId, $name, $type, $param, $needCommand) {
+		$ret_val = false;
+		if ($conn && $serverId > 0) {
+			$sql = "select charname from charfulldata where worldid = '$serverId' and charname = '$name'";
+			$query = mysqli_query($conn, $sql);
+			if ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+				// 先确保有这个号
+				if ($type == 1 || $type == 2) {
+					$wSql = "update charfulldata set ";
+					if ($type == 1) {
+						// 解除禁言
+						$wSql .= "unforbidtalktime = '$param' ";
+					}
+					elseif ($type == 2) {
+						// 解除封号
+						$wSql .= "unblocktime = '$param' ";
+					}
 
-	if($_POST[submitquery]){
-		$conn = GetDBByIndex($_SESSION[DBIndex]);
-		$serverId = GetServerId($_SESSION[DBIndex]);
+					$wSql .= "where worldid = '$serverId' and charname = '$name'";
+					mysqli_query($conn, $wSql);
+				}
+
+				if ($needCommand) {
+					$cSql = "insert into gmcommand(worldid, type, command, param) values('$serverId', '3', 'rm,".$type.",".$param."', '$name')";
+					mysqli_query($conn, $cSql);
+				}
+
+				$ret_val = true;
+			}
+		}
+
+		return $ret_val;
+	}
+
+	if ($_POST[submitpm]) {
 		if ($conn == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
 			alertMsg("请先选择服再操作");
 			exit();
 		}
 
-		$playerguid = $_POST[playerguid] != null ? $_POST[playerguid] : 0;
-		$playername = $_POST[playername] != null ? $_POST[playername] : '';
-		$account = $_POST[account] != null ? $_POST[account] : '';
+		if ($_POST[pm_some] == null) {
+			alertMsg("请先选择玩家类型再操作");
+			exit();
+		}
 
-		$sql = "select * from charfulldata where worldid = $serverId and ($playerguid = 0 or guid = $playerguid) and ('$playername' = '' or charname = '$playername') and ('$account' = '' or accname = '$account')";
-		$query = mysqli_query($conn, $sql);
+		if ($_POST[pm_some_op] == null) {
+			alertMsg("请先选择类型再操作");
+			exit();
+		}
 
-		while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-			echo "<tr><th>$row[worldid]</th><th>$row[guid]</th><th>$row[charname]</th><th>$row[accname]</th><th>$row[profession]</th><th>$row[level]</th><th>$row[nvipcost]</th></tr>";
+		if ($_POST[pm_reason] == null) {
+			alertMsg("请先输入原因");
+			exit();
+		}
+
+		if ($_POST[pm_time] == null) {
+			$_POST[pm_time] = 0;
+		}
+
+		$op_result = false;
+		if ($_POST[pm_some] == 2) {
+			$sql = "select charname from charfulldata where worldid = '$serverId' and accname = '$_POST[pm_info]'";
+			$query = mysqli_query($conn, $sql);
+			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+				SetState($conn, $serverId, $row[charname], $_POST[pm_some_op], $_POST[pm_time], true);
+				$op_result = true;
+			}
+		}
+		else {
+			$op_result = SetState($conn, $serverId, $_POST[pm_info], $_POST[pm_some_op], $_POST[pm_time], true);
+		}
+
+		if ($op_result) {
+			OnRecordOption($_SESSION[name], $typeName[$_POST[pm_some_op]]."-".$_POST[pm_time]."-原因:".$_POST[pm_reason], $_SESSION[DBIndex], $someType[$_POST[pm_some]]."-".$_POST[pm_info]);
+		}
+		else {
+			alertMsg("角色不存在,操作失败");
 		}
 	}
 
-	echo "</table>";
+	foreach ($unblockInfo as $key => $value) {
+		$subName = 'submitpmtb'.$key;
+		if ($_POST[$subName]) {
+			if (SetState($conn, $serverId, $value, 2, 0, flase)) {
+				OnRecordOption($_SESSION[name], "解除封号", $_SESSION[DBIndex], $value);
+				$_SESSION[unblocktime_index] = $i;
+				echo "<script language = 'JavaScript'> location.reload() ; </script>";
+			}
+		}
+	}
+
+	foreach ($unforbidtalkInfo as $key => $value) {
+		$subName = 'submitpmtf'.$key;
+		if ($_POST[$subName]) {
+			if (SetState($conn, $serverId, $value, 1, 0, true)) {
+				OnRecordOption($_SESSION[name], "解除禁言", $_SESSION[DBIndex], $value);
+				$_SESSION[unforbidtalktime_index] = $j;
+				echo "<script language = 'JavaScript'> location.reload() ; </script>";
+			}
+		}
+	}
 
 	require_once("../html/bottom.html");
 ?>

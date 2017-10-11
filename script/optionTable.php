@@ -1,6 +1,6 @@
 <?php
 	echo "<table width = '100%' class = $option_table>
-		<tr><th>操作者</th><th>发放内容</th><th>操作服</th><th>玩家信息</th><th>时间</th></tr>";
+		<tr><th>操作者</th><th>操作内容</th><th>操作服</th><th>玩家信息</th><th>时间</th></tr>";
 		if ($conn != null) {
 			// 只查找发放物品的信息
 			//$sql = "select * from option_record where `option` like '发放物品-%' order by id desc";
