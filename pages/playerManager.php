@@ -64,7 +64,7 @@
 
 <form action = '' method = 'post'>
 <table width = '100%' class = 'pm_table'>
-		<tr><td>账号</td><td>角色名</td><td>状态</td><td>到期时间</td><td>操作</td></tr>
+		<tr><td>账号</td><td>角色名</td><td>状态</td><td>到期时间</td><td>操作者-操作时间</td><td>操作内容</td><td>操作</td></tr>
 		<?php
 			$conn = GetDBByIndex($_SESSION[DBIndex]);
 			$serverId = GetServerId($_SESSION[DBIndex]);
@@ -91,7 +91,13 @@
 						$time = date("Y/m/d h:i:sa", $row[unblocktime]);
 						$subName = 'submitpmtb'.$i;
 						$unblockInfo[$i] = $row[charname];
-						echo "<tr><td>$row[accname]</td><td>$unblockInfo[$i]</td><td>封号中</td><td>$time</td><td><input name='$subName' type='submit' value='解除封号' /></td></tr>";
+
+						$conn0 = GetDBByIndex(0);
+						$sql0 = "select * from option_record where `option` like '封号-%' and player like '%$row[charname]%' order by id desc limit 1";
+						$query0 = mysqli_query($conn0, $sql0);
+						$row0 = mysqli_fetch_array($query0, MYSQLI_ASSOC);
+
+						echo "<tr><td>$row[accname]</td><td>$unblockInfo[$i]</td><td>封号中</td><td>$time</td><td>$row0[username]-$row0[time]</td><td>$row0[option]</td><td><input name='$subName' type='submit' value='解除封号' /></td></tr>";
 						$i++;
 					}
 
@@ -99,7 +105,13 @@
 						$time = date("Y/m/d h:i:sa", $row[unforbidtalktime]);
 						$subName = 'submitpmtf'.$j;
 						$unforbidtalkInfo[$j] = $row[charname];
-						echo "<tr><td>$row[accname]</td><td>$unforbidtalkInfo[$j]</td><td>禁言中</td><td>$time</td><td><input name='$subName' type='submit' value='解除禁言' /></td></tr>";
+
+						$conn0 = GetDBByIndex(0);
+						$sql0 = "select * from option_record where `option` like '禁言-%' and player like '%$row[charname]%' order by id desc limit 1";
+						$query0 = mysqli_query($conn0, $sql0);
+						$row0 = mysqli_fetch_array($query0, MYSQLI_ASSOC);
+
+						echo "<tr><td>$row[accname]</td><td>$unforbidtalkInfo[$j]</td><td>禁言中</td><td>$time</td><td>$row0[username]-$row0[time]</td><td>$row0[option]</td><td><input name='$subName' type='submit' value='解除禁言' /></td></tr>";
 						$j++;
 					}
 				}
@@ -168,21 +180,30 @@
 			$_POST[pm_time] = 0;
 		}
 
-		$op_result = false;
+		$op_player = '';
 		if ($_POST[pm_some] == 2) {
 			$sql = "select charname from charfulldata where worldid = '$serverId' and accname = '$_POST[pm_info]'";
 			$query = mysqli_query($conn, $sql);
 			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-				SetState($conn, $serverId, $row[charname], $_POST[pm_some_op], $_POST[pm_time], true);
-				$op_result = true;
+				if (SetState($conn, $serverId, $row[charname], $_POST[pm_some_op], $_POST[pm_time], true)) {
+					if ($op_player == null) {
+						$op_player = "账号:".$_POST[pm_info]."-".$row[charname];
+					}
+					else {
+						$op_player .= "-".$row[charname];
+					}
+				}
 			}
 		}
 		else {
-			$op_result = SetState($conn, $serverId, $_POST[pm_info], $_POST[pm_some_op], $_POST[pm_time], true);
+			if (SetState($conn, $serverId, $_POST[pm_info], $_POST[pm_some_op], $_POST[pm_time], true)) {
+				$op_player = "角色名:".$_POST[pm_info];
+			}
 		}
 
-		if ($op_result) {
-			OnRecordOption($_SESSION[name], $typeName[$_POST[pm_some_op]]."-".$_POST[pm_time]."-原因:".$_POST[pm_reason], $_SESSION[DBIndex], $someType[$_POST[pm_some]]."-".$_POST[pm_info]);
+		if ($op_player) {
+			OnRecordOption($_SESSION[name], $typeName[$_POST[pm_some_op]]."-".$_POST[pm_time]."-原因:".$_POST[pm_reason], $_SESSION[DBIndex], $op_player);
+			alertMsg("操作成功 ".$op_player." 被".$typeName[$_POST[pm_some_op]]);
 		}
 		else {
 			alertMsg("角色不存在,操作失败");
