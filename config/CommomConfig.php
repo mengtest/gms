@@ -1,6 +1,6 @@
 <?php
 	// 定义加密信息
-	define("MD5_encrypt", "test100");
+	define("MD5_encrypt", "f98e3fd3f9051b1");
 
 	// 定义主机地址
 	define("host_addr", 'http://192.168.1.116:8550/gms/');

@@ -6,7 +6,7 @@ create table if not exists user_list
 	`password` varchar(64) comment 'ÃÜÂë'
 ) engine = myisam default charset=utf8 comment='½ÇÉ«±í';
 
-insert into user_list(jurisdiction, username, password) value(0, 'admin', '291760f98414679e3fd3f9051b19b6f7');
+insert into user_list(jurisdiction, username, password) value(0, 'admin', '04bac4668ac0a8dc5a6529f7b09e4828');
 
 create table if not exists option_record
 (
