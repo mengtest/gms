@@ -33,11 +33,12 @@
 </table>-->
 
 <form action="" method="post" class = 'record_form'>
- 	操作者：<input name="reusername" type="text" value="<?php echo $_SESSION[rusername]; ?>" title = "完整名称" />
- 	内容：<input name="reoption" type="text" value="<?php echo $_SESSION[roption]; ?>" title = "填写关键词即可" />
- 	服：<input name="reserver" type="text" value="<?php echo $_SESSION[rserver]; ?>" title = "填写关键词即可" />
- 	玩家：<input name="replayer" type="text" value="<?php echo $_SESSION[rplayer]; ?>" title = "填写关键词即可" />
- 	查询条数：<input name="relimit" type="text" value="<?php echo $_SESSION[rlimit]; ?>" title = "不填代表查询全部" />
+ 	操作者：<input name="reusername" type="text" value="<?php echo $_SESSION[rusername]; ?>" style="width:100px" title = "完整名称" />
+ 	内容：<input name="reoption" type="text" value="<?php echo $_SESSION[roption]; ?>" style="width:150px" title = "填写关键词即可" />
+ 	服：<input name="reserver" type="text" value="<?php echo $_SESSION[rserver]; ?>" style="width:100px" title = "填写关键词即可" />
+ 	玩家：<input name="replayer" type="text" value="<?php echo $_SESSION[rplayer]; ?>" style="width:100px" title = "填写关键词即可" />
+ 	时间：<input name="retime" type="text" value="<?php echo $_SESSION[rtime]; ?>" style="width:100px" title = "如:2017/10/11" />
+ 	查询条数：<input name="relimit" type="text" value="<?php echo $_SESSION[rlimit]; ?>" style="width:50px" title = "不填代表查询全部" />
  	<input name="submitrecord" type="submit" value="查询" />
 </form>
 
@@ -80,6 +81,16 @@
 		$sqlinc .= "player like '%$_SESSION[rplayer]%' ";
 	}
 
+	if ($_SESSION[rtime]) {
+		if ($sqlinc) {
+			$sqlinc .= "and ";
+		}
+		else {
+			$sqlinc = "where ";
+		}
+		$sqlinc .= "`time` like '%$_SESSION[rtime]%' ";
+	}
+
 	$sql .= $sqlinc."order by id desc";
 	if (is_numeric($_SESSION[rlimit]) && $_SESSION[rlimit] > 0) {
 		$sql .= " limit $_SESSION[rlimit]";
@@ -107,6 +118,11 @@
 
 		if ($_SESSION[rplayer] != $_POST[replayer]) {
 			$_SESSION[rplayer] = $_POST[replayer];
+			$flushPage = true;
+		}
+
+		if ($_SESSION[rtime] != $_POST[retime]) {
+			$_SESSION[rtime] = $_POST[retime];
 			$flushPage = true;
 		}
 
