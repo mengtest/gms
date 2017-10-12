@@ -11,10 +11,11 @@
 			'DataSource' => 'test',
 			);
 
-	// 服配置
-	// 0为gm后台数据库配置
-	// 1之后为服所在数据库配置
-	$serverConfig2 = array(
+	/*------------------------------------------------------分割线-------------------------------------------------------*/
+	/*--------------------------------------------------以下不需要修改---------------------------------------------------*/
+
+	// 服配置(从1开始)
+	/*$serverConfig2 = array(
 		1 => array(
 			'addr_s' => 'localhost',
 			'user' => 'root',
@@ -195,12 +196,21 @@
 			'serverName' => 's111(内网)',
 			'platName' => '本地服12',
 			),
-		);
+		21 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 101,
+			'serverName' => 's101(内网)',
+			'platName' => '本地服13',
+			),
+		);*/
 
 	/*------------------------------------------------------分割线-------------------------------------------------------*/
 	/*--------------------------------------------------以下不需要修改---------------------------------------------------*/
 
-	if (empty($serverConfig) || $serverConfig == null || empty($serverList) || $serverList == null) {
+	if (empty($serverConfig) || empty($serverList)) {
 		$serverConfig = array();
 		LoadServerConfig();
 	}
@@ -213,7 +223,44 @@
 		array_push($GLOBALS[serverConfig], $GLOBALS[local_db]);
 
 		$tempServerList = array();
-		foreach ($GLOBALS[serverConfig2] as $index => $serverInfo) {
+		$connload0 = GetDBByIndex(0);
+		if ($connload0) {
+			$sql = "select * from server_info";
+			$query = mysqli_query($connload0, $sql);
+
+			$index = 1;
+			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+				$serverInfo = array(
+					'addr_s' => $row[addrs],
+					'user' => $row[duser],
+					'password' => $row[dpassword],
+					'DataSource' => $row[datasource],
+					'platName' => $row[platname],
+					'serverName' => $row[servername],
+					'serverId' => $row[serverid],
+					);
+
+				array_push($GLOBALS[serverConfig], $serverInfo);
+
+				if (empty($tempServerList[$serverInfo[platName]])) {
+					// 新增一个平台
+					$platInfo = array($index => $serverInfo[serverName]);
+					$tempServerList[$serverInfo[platName]] = $platInfo;
+				}
+				else {
+					// 平台已存在
+					$tempPlatInfo = $tempServerList[$serverInfo[platName]];
+					if (empty($tempPlatInfo[$index])) {
+						$tempPlatInfo[$index] = $serverInfo[serverName];
+					}
+					$tempServerList[$serverInfo[platName]] = $tempPlatInfo;
+				}
+
+				$index++;
+			}
+		}
+
+		/*foreach ($GLOBALS[serverConfig2] as $index => $serverInfo) {
 			array_push($GLOBALS[serverConfig], $serverInfo);
 
 			if (empty($tempServerList[$serverInfo[platName]])) {
@@ -229,7 +276,7 @@
 				}
 				$tempServerList[$serverInfo[platName]] = $tempPlatInfo;
 			}
-		}
+		}*/
 
 		// 每次重新读取,保持一致性
 		$GLOBALS[serverList] = $tempServerList;
