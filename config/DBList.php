@@ -7,10 +7,10 @@
 	** ----------------------------------------------------------------------------------
 	** 增加一个新服:
 	** 1.填写服配置(自增索引)
-	** 2.填写服列表(每个服必须有对应的索引,索引必须唯一)
+	** 2.如果平台名已存在，最好采用复制的方式，避免出错
 	*/
 
-	// 服配置(1)
+	// 服配置
 	// 0为gm后台数据库配置
 	// 1之后为服所在数据库配置
 	$serverConfig = array(
@@ -25,6 +25,10 @@
 			'DataSource' => 'test',
 			// 服id(也是游戏的worldid)
 			'serverId' => -1,
+			// 服名称
+			'serverName' => 'GM后台',
+			// 平台名称
+			'platName' => 'GM后台',
 			),
 		1 => array(
 			'addr_s' => 'localhost',
@@ -32,6 +36,8 @@
 			'password' => 'root',
 			'DataSource' => '3dmmo',
 			'serverId' => 100,
+			'serverName' => 's100(本地)',
+			'platName' => '本地服0',
 			),
 		2 => array(
 			'addr_s' => '192.168.1.117',
@@ -39,6 +45,8 @@
 			'password' => 'root',
 			'DataSource' => 'mtlbbdb_100',
 			'serverId' => 106,
+			'serverName' => 's106(内网)',
+			'platName' => '本地服1',
 			),
 		3 => array(
 			'addr_s' => '192.168.1.117',
@@ -46,6 +54,8 @@
 			'password' => 'root',
 			'DataSource' => 'mtlbbdb_100',
 			'serverId' => 107,
+			'serverName' => 's107(内网)',
+			'platName' => '本地服1',
 			),
 		4 => array(
 			'addr_s' => '192.168.1.117',
@@ -53,6 +63,8 @@
 			'password' => 'root',
 			'DataSource' => 'mtlbbdb_100',
 			'serverId' => 108,
+			'serverName' => 's108(内网)',
+			'platName' => '本地服2',
 			),
 		5 => array(
 			'addr_s' => '192.168.1.117',
@@ -60,6 +72,8 @@
 			'password' => 'root',
 			'DataSource' => 'mtlbbdb_100',
 			'serverId' => 109,
+			'serverName' => 's109(内网)',
+			'platName' => '本地服2',
 			),
 		6 => array(
 			'addr_s' => '192.168.1.117',
@@ -67,6 +81,8 @@
 			'password' => 'root',
 			'DataSource' => 'mtlbbdb_100',
 			'serverId' => 110,
+			'serverName' => 's110(内网)',
+			'platName' => '本地服3',
 			),
 		7 => array(
 			'addr_s' => '192.168.1.117',
@@ -74,6 +90,8 @@
 			'password' => 'root',
 			'DataSource' => 'mtlbbdb_100',
 			'serverId' => 111,
+			'serverName' => 's111(内网)',
+			'platName' => '本地服3',
 			),
 		8 => array(
 			'addr_s' => '192.168.1.117',
@@ -81,64 +99,118 @@
 			'password' => 'root',
 			'DataSource' => 'mtlbbdb_100',
 			'serverId' => 117,
+			'serverName' => 's117(内网)',
+			'platName' => '本地服0',
+			),
+		9 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 110,
+			'serverName' => 's110(内网)',
+			'platName' => '本地服4',
+			),
+		10 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 111,
+			'serverName' => 's111(内网)',
+			'platName' => '本地服4',
+			),
+		11 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 110,
+			'serverName' => 's110(内网)',
+			'platName' => '本地服5',
+			),
+		12 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 111,
+			'serverName' => 's111(内网)',
+			'platName' => '本地服5',
+			),
+		13 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 110,
+			'serverName' => 's110(内网)',
+			'platName' => '本地服6',
+			),
+		14 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 111,
+			'serverName' => 's111(内网)',
+			'platName' => '本地服6',
+			),
+		15 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 110,
+			'serverName' => 's110(内网)',
+			'platName' => '本地服7',
+			),
+		16 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 111,
+			'serverName' => 's111(内网)',
+			'platName' => '本地服8',
+			),
+		17 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 110,
+			'serverName' => 's110(内网)',
+			'platName' => '本地服9',
+			),
+		18 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 111,
+			'serverName' => 's111(内网)',
+			'platName' => '本地服10',
+			),
+		19 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 110,
+			'serverName' => 's110(内网)',
+			'platName' => '本地服11',
+			),
+		20 => array(
+			'addr_s' => '192.168.1.117',
+			'user' => 'root',
+			'password' => 'root',
+			'DataSource' => 'mtlbbdb_100',
+			'serverId' => 111,
+			'serverName' => 's111(内网)',
+			'platName' => '本地服12',
 			),
 		);
-
-	// 服列表(2)
-	// serverList下的key代表平台名
-	// 平台下的key为索引,必须与上面服配置匹配
-	// 平台下value为服名称(显示用)
-	$serverList = array(
-		'本地服0' => array(
-			1 => 's100(本地)',
-			8 => 's117(内网)', 
-			), 
-		'本地服1' => array(
-			2 => 's106(内网)',
-			3 => 's107(内网)', 
-			), 
-		'本地服2' => array(
-			4 => 's108(内网)',
-			5 => 's109(内网)', 
-			), 
-		'本地服3' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服4' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服5' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服6' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服7' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服8' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服9' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服10' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		'本地服11' => array(
-			6 => 's110(内网)',
-			7 => 's111(内网)', 
-			), 
-		);
-
 
 	/*------------------------------------------------------分割线-------------------------------------------------------*/
 	/*--------------------------------------------------以下不需要修改---------------------------------------------------*/
@@ -168,5 +240,31 @@
 		}
 
 		return $serverId;
+	}
+
+	function GetServerList() {
+		$tempServerList = array();
+		$servercfg = $GLOBALS[serverConfig];
+
+		// 把配置扫描进去
+		foreach ($servercfg as $index => $serverInfo) {
+			if ($index <= 0) continue;
+
+			if (empty($tempServerList[$serverInfo[platName]])) {
+				// 新增一个平台
+				$platInfo = array($index => $serverInfo[serverName]);
+				$tempServerList[$serverInfo[platName]] = $platInfo;
+			}
+			else {
+				// 平台已存在
+				$tempPlatInfo = $tempServerList[$serverInfo[platName]];
+				if (empty($tempPlatInfo[$index])) {
+					$tempPlatInfo[$index] = $serverInfo[serverName];
+				}
+				$tempServerList[$serverInfo[platName]] = $tempPlatInfo;
+			}
+		}
+
+		return $tempServerList;
 	}
 ?>

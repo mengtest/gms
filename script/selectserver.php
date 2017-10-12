@@ -19,6 +19,7 @@
 
 	//function FlushPaltInfo() {
 		$i = 0;
+		$serverList = GetServerList();
 		foreach ($serverList as $plat => $idList) {
 			if ($i % plat_page == 0) {
 				$isShow = (($_SESSION[page] - 1) == ($i / plat_page)) ? 'block' : 'none';

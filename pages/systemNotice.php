@@ -26,9 +26,12 @@
 			<option value = '1'>全平台</option>
 			<?php
 				$i = 2;
-				foreach ($serverList as $plat => $idList) {
-					echo "<option value = '$i'>$plat</option>";
-					$i++;
+				$serverList = GetServerList();
+				if (!empty($serverList)) {
+					foreach ($serverList as $plat => $idList) {
+						echo "<option value = '$i'>$plat</option>";
+						$i++;
+					}
 				}
 			?>
 		</select><br/><br/><br/>
