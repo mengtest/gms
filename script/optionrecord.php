@@ -1,7 +1,4 @@
 <?php
-	// 屏蔽提示
-	error_reporting(E_ALL || ~E_NOTICE);
-
 	$absolute_path = dirname(dirname(__FILE__));
 
 	require_once("$absolute_path/config/DBList.php");
@@ -9,7 +6,6 @@
 	// 设置默认时区为北京
 	date_default_timezone_set('PRC');
 
-	$serverList = GetServerList();
 	function OnRecordOption($userName, $option, $serverindex, $player) {
 		// 这里不检测了，直接记录
 		$conn = GetDBByIndex(0);

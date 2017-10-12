@@ -1,35 +1,20 @@
 <?php
-	/*
-	** 可以多个index对应一个数据库
-	** index唯一
-	** 每个index都必须对应一个ServerId(游戏服id)和一个名称(服列表)
-	** ServerId可以重复(必须大于0)
-	** ----------------------------------------------------------------------------------
-	** 增加一个新服:
-	** 1.填写服配置(自增索引)
-	** 2.如果平台名已存在，最好采用复制的方式，避免出错
-	*/
-
-	// 服配置
-	// 0为gm后台数据库配置
-	// 1之后为服所在数据库配置
-	$serverConfig = array(
-		0 => array(
+	// 定义本地数据库信息
+	$local_db = array(
 			// 数据库所在地址
 			'addr_s' => 'localhost',
 			// 数据库用户名
 			'user' => 'root',
 			// 数据库密码
 			'password' => 'root',
-			// 数据表名称
+			// 数据源名称
 			'DataSource' => 'test',
-			// 服id(也是游戏的worldid)
-			'serverId' => -1,
-			// 服名称
-			'serverName' => 'GM后台',
-			// 平台名称
-			'platName' => 'GM后台',
-			),
+			);
+
+	// 服配置
+	// 0为gm后台数据库配置
+	// 1之后为服所在数据库配置
+	$serverConfig2 = array(
 		1 => array(
 			'addr_s' => 'localhost',
 			'user' => 'root',
@@ -215,6 +200,46 @@
 	/*------------------------------------------------------分割线-------------------------------------------------------*/
 	/*--------------------------------------------------以下不需要修改---------------------------------------------------*/
 
+	if (empty($serverConfig) || $serverConfig == null || empty($serverList) || $serverList == null) {
+		$serverConfig = array();
+		LoadServerConfig();
+	}
+
+	function LoadServerConfig() {
+		if (!empty($GLOBALS[serverConfig])) {
+			return;
+		}
+
+		array_push($GLOBALS[serverConfig], $GLOBALS[local_db]);
+
+		$tempServerList = array();
+		foreach ($GLOBALS[serverConfig2] as $index => $serverInfo) {
+			array_push($GLOBALS[serverConfig], $serverInfo);
+
+			if (empty($tempServerList[$serverInfo[platName]])) {
+				// 新增一个平台
+				$platInfo = array($index => $serverInfo[serverName]);
+				$tempServerList[$serverInfo[platName]] = $platInfo;
+			}
+			else {
+				// 平台已存在
+				$tempPlatInfo = $tempServerList[$serverInfo[platName]];
+				if (empty($tempPlatInfo[$index])) {
+					$tempPlatInfo[$index] = $serverInfo[serverName];
+				}
+				$tempServerList[$serverInfo[platName]] = $tempPlatInfo;
+			}
+		}
+
+		// 每次重新读取,保持一致性
+		$GLOBALS[serverList] = $tempServerList;
+	}
+
+	function ReLoadServerConfig() {
+		$GLOBALS[serverConfig] = array();
+		LoadServerConfig();
+	}
+
 	function GetDBByIndex($index) {
 		$conn = null;
 
@@ -234,6 +259,8 @@
 	function GetServerId($index) {
 		$serverId = -1;
 
+		if ($index <= 0) return -1;
+
 		$servercfg = $GLOBALS[serverConfig][$index];
 		if ($servercfg && $servercfg['addr_s'] && $servercfg['serverId']) {
 			$serverId = $servercfg['serverId'];
@@ -242,29 +269,29 @@
 		return $serverId;
 	}
 
-	function GetServerList() {
-		$tempServerList = array();
-		$servercfg = $GLOBALS[serverConfig];
+	function GetPlatName($index) {
+		$rPlatName = '';
 
-		// 把配置扫描进去
-		foreach ($servercfg as $index => $serverInfo) {
-			if ($index <= 0) continue;
+		if ($index <= 0) return '';
 
-			if (empty($tempServerList[$serverInfo[platName]])) {
-				// 新增一个平台
-				$platInfo = array($index => $serverInfo[serverName]);
-				$tempServerList[$serverInfo[platName]] = $platInfo;
-			}
-			else {
-				// 平台已存在
-				$tempPlatInfo = $tempServerList[$serverInfo[platName]];
-				if (empty($tempPlatInfo[$index])) {
-					$tempPlatInfo[$index] = $serverInfo[serverName];
-				}
-				$tempServerList[$serverInfo[platName]] = $tempPlatInfo;
-			}
+		$servercfg = $GLOBALS[serverConfig][$index];
+		if ($servercfg && $servercfg['addr_s'] && $servercfg['platName']) {
+			$rPlatName = $servercfg['platName'];
 		}
 
-		return $tempServerList;
+		return $rPlatName;
+	}
+
+	function GetServerName($index) {
+		$rServerName = '';
+
+		if ($index <= 0) return '';
+
+		$servercfg = $GLOBALS[serverConfig][$index];
+		if ($servercfg && $servercfg['addr_s'] && $servercfg['serverName']) {
+			$rServerName = $servercfg['serverName'];
+		}
+
+		return $rServerName;
 	}
 ?>

@@ -1,7 +1,4 @@
 <?php
-	// 屏蔽提示
-	error_reporting(E_ALL || ~E_NOTICE);
-
 	$Title = "这里是物品发放页";
 	require_once("../html/header.html");
 	echo "<div class = 'shade_div'></div>";

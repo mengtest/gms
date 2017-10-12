@@ -1,7 +1,4 @@
 <?php
-	// 屏蔽提示
-	error_reporting(E_ALL || ~E_NOTICE);
-
 	$Title = "这里是发送邮件页";
 	require_once("../html/header.html");
 	echo "<div class = 'shade_div2'></div>";
@@ -32,12 +29,9 @@
 					<option value = '1'>全平台</option>
 					<?php
 						$i = 2;
-						$serverList = GetServerList();
-						if (!empty($serverList)) {
-							foreach ($serverList as $plat => $idList) {
-								echo "<option value = '$i'>$plat</option>";
-								$i++;
-							}
+						foreach ($serverList as $plat => $idList) {
+							echo "<option value = '$i'>$plat</option>";
+							$i++;
 						}
 					?>
 				</select>
