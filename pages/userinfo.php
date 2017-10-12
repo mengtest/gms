@@ -4,6 +4,7 @@
 
 	$Title = "这里是角色编辑页";
 	require_once("../html/header.html");
+	echo "<div class = 'shade_div3'></div>";
 	require_once("../config/menu.php");
 	
 	// 检测登陆状态
@@ -71,7 +72,6 @@
 		}
 	?>
 </table>
-
 
 <?php
 	if($_POST[submituser]){
