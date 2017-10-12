@@ -37,12 +37,25 @@
 			exit();
 		}
 
-		$sql = "insert into server_info(addrs, duser, dpassword, datasource, platname, servername, serverid) value('$_POST[paddrs]', '$_POST[puser]', '$_POST[pps]', '$_POST[pds]', '$_POST[ppn]', '$_POST[psn]', $_POST[psi])";
+		$fResult = '';
+		$sql = "select * from server_info where platname = '$_POST[ppn]' and servername = '$_POST[psn]'";
+		$query = mysqli_query($conn, $sql);
+		if ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+			// 数据已经存在,更新
+			$sql = "update server_info set addrs = '$_POST[paddrs]', duser = '$_POST[puser]', dpassword = '$_POST[pps]', datasource = '$_POST[pds]', serverid = $_POST[psi] where platname = '$_POST[ppn]' and servername = '$_POST[psn]'";
+			$fResult = "更新 ";
+		}
+		else {
+			// 数据不存在,插入
+			$sql = "insert into server_info(addrs, duser, dpassword, datasource, platname, servername, serverid) value('$_POST[paddrs]', '$_POST[puser]', '$_POST[pps]', '$_POST[pds]', '$_POST[ppn]', '$_POST[psn]', $_POST[psi])";
+			$fResult = "新增 ";
+		}
+
 		mysqli_query($conn, $sql);
 
 		ReLoadServerConfig();
 
-		$fResult = "新增 平台:".$_POST[ppn]." 服:".$_POST[psn]." 成功";
+		$fResult .= "平台:".$_POST[ppn]." 服:".$_POST[psn]." 成功";
 	}
 
 	if ($_POST[submitplatsec]) {
@@ -87,7 +100,7 @@
  	平台名：<input name="ppn" type="text" />
  	服名：<input name="psn" type="text" />
  	服id：<input name="psi" type="text" title="必须大于0"/>
- 	<input name="submitplatinc" type="submit" value="新增" />
+ 	<input name="submitplatinc" type="submit" title="当平台名和服名都存在就更新" value="新增或更新" />
 </form>
 
 <hr class = 'plat_hr' />
