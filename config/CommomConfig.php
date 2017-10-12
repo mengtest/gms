@@ -17,6 +17,9 @@
 	// 定义最大vip等级
 	define("vip_max", 7);
 
+	// 定义菜单高度百分比
+	define("menu_height", 9);
+
 	// 定义错误信息
 	$error_notice = array(
 		0 => '成功', 

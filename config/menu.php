@@ -13,6 +13,7 @@
 		'发送邮件' => 'sendMail', 
 		'物品发放' => 'sendItem', 
 		'GM命令' => 'GMCommand', 
+		'平台管理' => 'platManager',
 		);
 
 	$hot_cloud_addr = hotcloud_addr;
@@ -25,7 +26,7 @@
 
 		if ($Juri < 0 || ($_SESSION[uid] && $_SESSION[Juri] <= $Juri)) {
 			$href_addr = host_addr.$paddr;
-			echo "<li style = 'height: 10%;'><a href='$href_addr' class = 'menufixed'>$pname</a></li>";
+			echo "<li style = 'height: ".menu_height."%;'><a href='$href_addr' class = 'menufixed'>$pname</a></li>";
 		}
 	}
 

@@ -43,6 +43,11 @@
 			case 'playerManager.php':
 				$jurisdiction = 0;
 				break;
+
+			// 平台管理
+			case 'platManager.php':
+				$jurisdiction = 0;
+				break;
 			
 			default:
 				break;
