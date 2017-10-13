@@ -111,10 +111,8 @@
 				else {
 					$newps = md5($_POST[password3].MD5_encrypt);
 					$sql = "insert into user_list(jurisdiction, username, password) value($_POST[uJuri3], '$_POST[uname3]', '$newps')";
-					echo $sql;
 					mysqli_query($conn, $sql);
 					alertMsg("用户创建成功");
-					header("Location: #");
 				}
 			}
 		}

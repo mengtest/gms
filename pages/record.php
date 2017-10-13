@@ -13,22 +13,6 @@
 	require_once("../config/DBList.php");
 ?>
 
-<!--<table width = '100%' class = 'record_table'>
-	<tr><th>名称</th><th>操作信息</th><th>操作服</th><th>玩家信息</th><th>时间</th></tr>
-	<?php
-		/*$conn = GetDBByIndex(0);
-		if ($conn != null) {
-			$sql = "select * from option_record order by id desc";
-			$query = mysqli_query($conn, $sql);
-			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-				echo "<tr><th>$row[username]</th><th>$row[option]</th><th>$row[optionserver]</th><th>$row[player]</th><th>$row[time]</th></tr>";
-			}
-			mysqli_free_result($query);
-			mysqli_close($conn);
-		}*/
-	?>
-</table>-->
-
 <form action="" method="post" class = 'record_form'>
  	操作者：<input name="reusername" type="text" value="<?php echo $_SESSION[rusername]; ?>" style="width:100px" title = "完整名称" />
  	内容：<input name="reoption" type="text" value="<?php echo $_SESSION[roption]; ?>" style="width:150px" title = "填写关键词即可" />
