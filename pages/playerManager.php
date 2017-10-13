@@ -87,7 +87,10 @@
 				}
 				$j = $_SESSION[unforbidtalktime_index];
 
+				$bgi = line_bg_s;
 				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					$styleBG = ($bgi % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
+					$bgi++;
 					if ($row[unblocktime] > $now) {
 						$time = date("Y/m/d h:i:sa", $row[unblocktime]);
 						$subName = 'submitpmtb'.$i;
@@ -98,7 +101,7 @@
 						$query0 = mysqli_query($conn0, $sql0);
 						$row0 = mysqli_fetch_array($query0, MYSQLI_ASSOC);
 
-						echo "<tr><td>$row[accname]</td><td>$unblockInfo[$i]</td><td>封号中</td><td>$time</td><td>$row0[username]-$row0[time]</td><td>$row0[option]</td><td><input name='$subName' type='submit' value='解除封号' /></td></tr>";
+						echo "<tr $styleBG><td>$row[accname]</td><td>$unblockInfo[$i]</td><td>封号中</td><td>$time</td><td>$row0[username]-$row0[time]</td><td>$row0[option]</td><td><input name='$subName' type='submit' value='解除封号' /></td></tr>";
 						$i++;
 					}
 
@@ -112,7 +115,7 @@
 						$query0 = mysqli_query($conn0, $sql0);
 						$row0 = mysqli_fetch_array($query0, MYSQLI_ASSOC);
 
-						echo "<tr><td>$row[accname]</td><td>$unforbidtalkInfo[$j]</td><td>禁言中</td><td>$time</td><td>$row0[username]-$row0[time]</td><td>$row0[option]</td><td><input name='$subName' type='submit' value='解除禁言' /></td></tr>";
+						echo "<tr $styleBG><td>$row[accname]</td><td>$unforbidtalkInfo[$j]</td><td>禁言中</td><td>$time</td><td>$row0[username]-$row0[time]</td><td>$row0[option]</td><td><input name='$subName' type='submit' value='解除禁言' /></td></tr>";
 						$j++;
 					}
 				}

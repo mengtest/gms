@@ -19,4 +19,13 @@
 
 	// 定义菜单高度百分比
 	define("menu_height", 9);
+
+	// 定义表格颜色起始行
+	define("line_bg_s", 0);
+
+	// 定义表格颜色区分行
+	define("line_bg_l", 2);
+
+	// 定义表格区分行颜色
+	define("line_bg_c", "#ECECFF");
 ?>

@@ -17,8 +17,11 @@
 			if ($conn != null) {
 				$sql = "select * from gmcommand where worldid = '$serverId'";
 				$query = mysqli_query($conn, $sql);
+				$i = line_bg_s;
 				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-					echo "<tr><th>$row[worldid]</th><th>$row[type]</th><th>$row[command]</th><th>$row[param]</th></tr>";
+					$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
+					$i++;
+					echo "<tr $styleBG><th>$row[worldid]</th><th>$row[type]</th><th>$row[command]</th><th>$row[param]</th></tr>";
 				}
 				mysqli_free_result($query);
 			}

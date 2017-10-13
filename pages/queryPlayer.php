@@ -43,8 +43,11 @@
 		$sql = "select * from charfulldata where worldid = $serverId and ($playerguid = 0 or guid = $playerguid) and ('$playername' = '' or charname = '$playername') and ('$account' = '' or accname = '$account')";
 		$query = mysqli_query($conn, $sql);
 
+		$i = line_bg_s;
 		while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-			echo "<tr><th>$row[worldid]</th><th>$row[guid]</th><th>$row[charname]</th><th>$row[accname]</th><th>$row[profession]</th><th>$row[level]</th><th>$row[nvipcost]</th></tr>";
+			$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
+			$i++;
+			echo "<tr $styleBG><th>$row[worldid]</th><th>$row[guid]</th><th>$row[charname]</th><th>$row[accname]</th><th>$row[profession]</th><th>$row[level]</th><th>$row[nvipcost]</th></tr>";
 		}
 	}
 

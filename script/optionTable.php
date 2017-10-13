@@ -6,8 +6,11 @@
 			//$sql = "select * from option_record where `option` like '发放物品-%' order by id desc";
 			//$sql = "select * from option_record order by id desc";
 			$query = mysqli_query($conn, $sql);
+			$i = line_bg_s;
 			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-				echo "<tr><td>$row[username]</td><td>$row[option]</td><td>$row[optionserver]</td><td>$row[player]</td><td>$row[time]</td></tr>";
+				$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
+				$i++;
+				echo "<tr $styleBG><td>$row[username]</td><td>$row[option]</td><td>$row[optionserver]</td><td>$row[player]</td><td>$row[time]</td></tr>";
 			}
 			mysqli_free_result($query);
 		}

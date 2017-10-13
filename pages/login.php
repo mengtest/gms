@@ -4,7 +4,7 @@
 	require_once("../config/menu.php");
 	require_once("../config/CommomConfig.php");
 
-	if ($_SESSION[uid] != null) {
+	if ($_SESSION[uid]) {
 		$reback_str = "<script language = 'JavaScript'> window.location.href='".host_addr."'; </script>";
 		echo $reback_str;
 		exit();
