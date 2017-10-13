@@ -96,4 +96,37 @@
 			echo "<script language = 'JavaScript'> alert(' $msg '); </script>";
 		}
 	}
+
+	// 定义错误信息
+	$error_notice = array(
+		0 => '成功', 
+		1 => 'Session信息异常', 
+		2 => '数据库连接异常', 
+		3 => '权限不足', 
+		);
+
+	function ThrowError($errorType) {
+		if (empty($GLOBALS[error_notice][$errorType])) {
+			$errorMsg = "类型异常";
+			$jumpPage = "";
+		}
+		elseif ($errorType == 0) {
+			return;
+		}
+		elseif ($errorType == 1 || $errorType == 2) {
+			$errorMsg = $GLOBALS[error_notice][$errorType];
+			$jumpPage = "login";
+		}
+		else {
+			$errorMsg = $GLOBALS[error_notice][$errorType];
+			$jumpPage = "";
+		}
+
+		if ($jumpPage) {
+			echo "<script language = 'JavaScript'>alert('$errorMsg');window.location.href='$jumpPage';</script>";
+		}
+		else {
+			echo "<script language = 'JavaScript'>alert('$errorMsg');history.back();</script>";
+		}
+	}
 ?>

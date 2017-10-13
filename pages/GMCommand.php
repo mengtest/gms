@@ -9,7 +9,7 @@
 	// 检测登陆状态
 	$checkVal = JurisdictionCheck(basename($_SERVER["PHP_SELF"]), $_SESSION[uid]);
 	if ($checkVal != 0) {
-		echo "<script language=javascript>alert('$error_notice[$checkVal]');history.back();</script>";
+		ThrowError($checkVal);
 	}
 
 	require_once("../config/DBList.php");

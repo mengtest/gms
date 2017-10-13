@@ -8,7 +8,7 @@
 	require_once("../script/check.php");
 	$checkVal = JurisdictionCheck(basename($_SERVER["PHP_SELF"]), $_SESSION[uid]);
 	if ($checkVal != 0) {
-		echo "<script language=javascript>alert('$error_notice[$checkVal]');history.back();</script>";
+		ThrowError($checkVal);
 	}
 
 	require_once("../config/DBList.php");
@@ -16,7 +16,6 @@
 ?>
 
 <form action="" method="post" class = 'query_form'>
- 	<!--服id：<input name="serverid" type="text" /><br />-->
  	Guid：<input name="playerguid" type="text" />
  	名称：<input name="playername" type="text" />
  	账号：<input name="account" type="text" />
