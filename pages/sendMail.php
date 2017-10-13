@@ -79,11 +79,6 @@
 </div>
 
 <?php
-	$conn = GetDBByIndex(0);
-	$option_table = 'mail_record';
-	$sql = "select * from option_record where `option` like '单平台邮件-%' or `option` like '发送邮件-%' or `option` like '单服邮件-%' or `option` like '全平台邮件-%' order by id desc";
-	require_once("../script/optionTable.php");
-
 	function SendMail($server_index, $vip, $level, $mcontent, $mitem, $myinliang, $mlingyu, $myuanbao, $myinpiao, $time) {
 		$conns = GetDBByIndex($server_index);
 		$serverId = GetServerId($server_index);
@@ -104,81 +99,86 @@
 	if ($_POST[submitmail]) {
 		if ($_POST[mail_content] == null) {
 			alertMsg("请先输入邮件内容");
-			exit();
-		}
-
-		$record_info = '物品组:'.$_POST[items].'-灵玉:'.$_POST[lingyu].',元宝:'.$_POST[yuanbao].',银两:'.$_POST[yinliang].'-内容:'.$_POST[mail_content];
-		$time = time();
-
-		if ($_POST[mail_some_plat] > 0) {
-			// 这里是选择了平台的(全服邮件)
-			if (!is_numeric($_POST[player_level])) {
-				alertMsg("等级必须为纯数字");
-				exit();
-			}
-
-			$i = ($_POST[mail_some_plat] == 1) ? -1 : 2;
-			foreach ($serverList as $plat => $idList) {
-				if ($i < 0 || $_POST[mail_some_plat] == $i) {
-					foreach ($idList as $server_index => $servername) {
-						SendMail($server_index, $_POST[mail_some_vip], $_POST[player_level], $_POST[mail_content], $_POST[items], $_POST[yinliang], $_POST[lingyu], $_POST[yuanbao], 0, $time);
-					}
-
-					if ($i > 0) {
-						OnRecordOptionAll($_SESSION[name], '单平台邮件-'.$record_info, $plat.'该平台所有玩家', $plat.'该平台所有服');
-						break;
-					}
-				}
-
-				if ($i > 0)
-					$i++;
-			}
-
-			if ($i == -1) {
-				OnRecordOptionAll($_SESSION[name], '全平台邮件-'.$record_info, '所有玩家', '所有平台');
-			}
 		}
 		else {
-			// 这里是发给单服玩家
-			$conn1 = GetDBByIndex($_SESSION[DBIndex]);
-			$serverId = GetServerId($_SESSION[DBIndex]);
-			if ($conn1 == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
-				alertMsg("请先选择服再操作");
-			}
-			else {
-				if ($_POST[player_name] == null) {
-					// 发送给全服玩家
-					SendMail($_SESSION[DBIndex], $_POST[mail_some_vip], $_POST[player_level], $_POST[mail_content], $_POST[items], $_POST[yinliang], $_POST[lingyu], $_POST[yuanbao], 0, $time);
+			$record_info = '物品组:'.$_POST[items].'-灵玉:'.$_POST[lingyu].',元宝:'.$_POST[yuanbao].',银两:'.$_POST[yinliang].'-内容:'.$_POST[mail_content];
+			$time = time();
 
-					OnRecordOptionAll($_SESSION[name], '单服邮件-'.$record_info, '该服所有玩家', $_SESSION[platName]."-".$serverList[$_SESSION[platName]][$_SESSION[DBIndex]]);
+			if ($_POST[mail_some_plat] > 0) {
+				// 这里是选择了平台的(全服邮件)
+				if (!is_numeric($_POST[player_level])) {
+					alertMsg("等级必须为纯数字");
 				}
 				else {
-					$plat_list = explode(" ", $_POST[player_name]);
-					$sql1 = "insert into gmcommand(worldid, type, command, param) values";
-					$sqlinc = "('$serverId', '2', 'gmmail,".$_POST[mail_content].",".$time.",".$_POST[yinliang].",".$_POST[lingyu].",".$_POST[yuanbao].",0";
-					if ($_POST[items]) {
-						$sqlinc .= ",$_POST[items]', ";
+					$i = ($_POST[mail_some_plat] == 1) ? -1 : 2;
+					foreach ($serverList as $plat => $idList) {
+						if ($i < 0 || $_POST[mail_some_plat] == $i) {
+							foreach ($idList as $server_index => $servername) {
+								SendMail($server_index, $_POST[mail_some_vip], $_POST[player_level], $_POST[mail_content], $_POST[items], $_POST[yinliang], $_POST[lingyu], $_POST[yuanbao], 0, $time);
+							}
+
+							if ($i > 0) {
+								OnRecordOptionAll($_SESSION[name], '单平台邮件-'.$record_info, $plat.'该平台所有玩家', $plat.'该平台所有服');
+								break;
+							}
+						}
+
+						if ($i > 0)
+							$i++;
+					}
+
+					if ($i == -1) {
+						OnRecordOptionAll($_SESSION[name], '全平台邮件-'.$record_info, '所有玩家', '所有平台');
+					}
+				}
+			}
+			else {
+				// 这里是发给单服玩家
+				$conn1 = GetDBByIndex($_SESSION[DBIndex]);
+				$serverId = GetServerId($_SESSION[DBIndex]);
+				if ($conn1 == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
+					alertMsg("请先选择服再操作");
+				}
+				else {
+					if ($_POST[player_name] == null) {
+						// 发送给全服玩家
+						SendMail($_SESSION[DBIndex], $_POST[mail_some_vip], $_POST[player_level], $_POST[mail_content], $_POST[items], $_POST[yinliang], $_POST[lingyu], $_POST[yuanbao], 0, $time);
+
+						OnRecordOptionAll($_SESSION[name], '单服邮件-'.$record_info, '该服所有玩家', $_SESSION[platName]."-".$serverList[$_SESSION[platName]][$_SESSION[DBIndex]]);
 					}
 					else {
-						$sqlinc .= "', ";
-					}
-
-					for ($i = 0; $i < count($plat_list); $i++) {
-						if ($i > 0) {
-							$sql1 = $sql1.','.$sqlinc."'".$plat_list[$i]."')";
+						$plat_list = explode(" ", $_POST[player_name]);
+						$sql1 = "insert into gmcommand(worldid, type, command, param) values";
+						$sqlinc = "('$serverId', '2', 'gmmail,".$_POST[mail_content].",".$time.",".$_POST[yinliang].",".$_POST[lingyu].",".$_POST[yuanbao].",0";
+						if ($_POST[items]) {
+							$sqlinc .= ",$_POST[items]', ";
 						}
 						else {
-							$sql1 = $sql1.$sqlinc."'".$plat_list[$i]."')";
+							$sqlinc .= "', ";
 						}
+
+						for ($i = 0; $i < count($plat_list); $i++) {
+							if ($i > 0) {
+								$sql1 = $sql1.','.$sqlinc."'".$plat_list[$i]."')";
+							}
+							else {
+								$sql1 = $sql1.$sqlinc."'".$plat_list[$i]."')";
+							}
+						}
+
+						mysqli_query($conn1, $sql1);
+
+						OnRecordOption($_SESSION[name], '发送邮件-'.$record_info, $_SESSION[DBIndex], $_POST[player_name]);
 					}
-
-					mysqli_query($conn1, $sql1);
-
-					OnRecordOption($_SESSION[name], '发送邮件-'.$record_info, $_SESSION[DBIndex], $_POST[player_name]);
 				}
 			}
 		}
 	}
+
+	$conn = GetDBByIndex(0);
+	$option_table = 'mail_record';
+	$sql = "select * from option_record where `option` like '单平台邮件-%' or `option` like '发送邮件-%' or `option` like '单服邮件-%' or `option` like '全平台邮件-%' order by id desc";
+	require_once("../script/optionTable.php");
 
 	require_once("../html/bottom.html");
 ?>

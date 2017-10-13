@@ -43,66 +43,65 @@
 			mysqli_free_result($query);
 		}
 	echo "</table>";*/
-	$option_table = 'item_table';
-	$sql = "select * from option_record where `option` like '发放物品-%' order by id desc";
-	require_once("../script/optionTable.php");
 
 	if($_POST[submitItem]){
 		$conns = GetDBByIndex($_SESSION[DBIndex]);
 		$serverId = GetServerId($_SESSION[DBIndex]);
 		if ($conn == null || $conns == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
 			alertMsg("请先选择服再操作");
-			exit();
 		}
-
-		if ($_POST[iteminfo] == null) {
+		elseif ($_POST[iteminfo] == null) {
 			alertMsg("没有物品内容");
-			exit();
 		}
-
-		$sqls = "insert into gmcommand(worldid, type, command, param) values";
-		$playinfo = null;
-		if ($_POST[playerguid] != null) {
-			$playinfo = $_POST[playerguid].'-';
-
-			//$sqlguid = $sqls;
-			$sqlinc = "('$serverId', '1', 'itemlist,$_POST[iteminfo]', ";
-			$guidArr = explode(",", $_POST[playerguid]);
-			for ($i = 0; $i < count($guidArr); $i++) {
-				if ($i > 0) {
-					$sqls = $sqls.','.$sqlinc."'".$guidArr[$i]."')";
-				}
-				else {
-					$sqls = $sqls.$sqlinc."'".$guidArr[$i]."')";
-				}
-			}
-		}
-
-		if ($_POST[playername] != null) {
-			$playinfo = $playinfo.$_POST[playername];
-
-			$sqlinc2 = "('$serverId', '2', 'itemlist,$_POST[iteminfo]', ";
+		else {
+			$sqls = "insert into gmcommand(worldid, type, command, param) values";
+			$playinfo = null;
 			if ($_POST[playerguid] != null) {
-				$sqls = $sqls.",";
+				$playinfo = $_POST[playerguid].'-';
+
+				//$sqlguid = $sqls;
+				$sqlinc = "('$serverId', '1', 'itemlist,$_POST[iteminfo]', ";
+				$guidArr = explode(",", $_POST[playerguid]);
+				for ($i = 0; $i < count($guidArr); $i++) {
+					if ($i > 0) {
+						$sqls = $sqls.','.$sqlinc."'".$guidArr[$i]."')";
+					}
+					else {
+						$sqls = $sqls.$sqlinc."'".$guidArr[$i]."')";
+					}
+				}
 			}
 
-			$nameArr = explode(" ", $_POST[playername]);
-			for ($i = 0; $i < count($nameArr); $i++) {
-				if ($i > 0) {
-					$sqls = $sqls.','.$sqlinc2."'".$nameArr[$i]."')";
+			if ($_POST[playername] != null) {
+				$playinfo = $playinfo.$_POST[playername];
+
+				$sqlinc2 = "('$serverId', '2', 'itemlist,$_POST[iteminfo]', ";
+				if ($_POST[playerguid] != null) {
+					$sqls = $sqls.",";
 				}
-				else {
-					$sqls = $sqls.$sqlinc2."'".$nameArr[$i]."')";
+
+				$nameArr = explode(" ", $_POST[playername]);
+				for ($i = 0; $i < count($nameArr); $i++) {
+					if ($i > 0) {
+						$sqls = $sqls.','.$sqlinc2."'".$nameArr[$i]."')";
+					}
+					else {
+						$sqls = $sqls.$sqlinc2."'".$nameArr[$i]."')";
+					}
 				}
 			}
-		}
 
-		if ($playinfo != null) {
-			mysqli_query($conns, $sqls);
+			if ($playinfo != null) {
+				mysqli_query($conns, $sqls);
 
-			OnRecordOption($_SESSION[name], '发放物品-'.$_POST[iteminfo], $_SESSION[DBIndex], $playinfo);
+				OnRecordOption($_SESSION[name], '发放物品-'.$_POST[iteminfo], $_SESSION[DBIndex], $playinfo);
+			}
 		}
 	}
+
+	$option_table = 'item_table';
+	$sql = "select * from option_record where `option` like '发放物品-%' order by id desc";
+	require_once("../script/optionTable.php");
 
 	require_once("../html/bottom.html");
 ?>

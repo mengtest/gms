@@ -56,20 +56,6 @@
 
 <hr class = 'userinfo_hr3' />
 
-<table width = '100%' class = 'userinfo_table'>
-	<tr><th>uid</th><th>权限</th><th>角色名</th></tr>
-	<?php
-		if ($conn != null) {
-			$sql = "select * from user_list";
-			$query = mysqli_query($conn, $sql);
-			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-				echo "<tr><th>$row[uid]</th><th>$row[jurisdiction]</th><th>$row[username]</th></tr>";
-			}
-			mysqli_free_result($query);
-		}
-	?>
-</table>
-
 <?php
 	if($_POST[submituser]){
 		if ($selfJuri >= 0 && $_POST[uJuri] >= $selfJuri)
@@ -90,10 +76,8 @@
 		{
 			if ($_POST[password1] != $_POST[password2] || $_POST[password1] == null) {
 				alertMsg("密码不可为空,或者两次输入不一致");
-				exit();
 			}
-
-			if ($conn != null) {
+			elseif ($conn != null) {
 				$newps = md5($_POST[password1].MD5_encrypt);
 				$sql = "update user_list set password = '$newps' where ('$_POST[uid2]' = '' or `uid` = '$_POST[uid2]') and ('$_POST[uname2]' = '' or `username` = '$_POST[uname2]')";
 				mysqli_query($conn, $sql);
@@ -110,40 +94,49 @@
 		{
 			if ($_POST[password3] != $_POST[password4] || $_POST[password3] == null) {
 				alertMsg("密码不可为空,或者两次输入不一致");
-				exit();
 			}
-
-			if ($_POST[uJuri3] == null || $_POST[uJuri3] < 0) {
+			elseif ($_POST[uJuri3] == null || $_POST[uJuri3] < 0) {
 				alertMsg("设置的权限非法");
-				exit();
 			}
-
-			if ($_POST[uname3] == null || $_POST[uname3] == '') {
+			elseif ($_POST[uname3] == null || $_POST[uname3] == '') {
 				alertMsg("设置的名字非法");
-				exit();
 			}
-
-			if ($conn != null) {
+			elseif ($conn != null) {
 				$sql = "select * from user_list where `username` = '$_POST[uname3]'";
 				$query = mysqli_query($conn, $sql);
 				$row = mysqli_fetch_array($query);
 				if ($row != null) {
 					alertMsg("该用户已存在");
-					exit();
 				}
-
-				$newps = md5($_POST[password3].MD5_encrypt);
-				$sql = "insert into user_list(jurisdiction, username, password) value($_POST[uJuri3], '$_POST[uname3]', '$newps')";
-				echo $sql;
-				mysqli_query($conn, $sql);
-				alertMsg("用户创建成功");
-				header("Location: #");
+				else {
+					$newps = md5($_POST[password3].MD5_encrypt);
+					$sql = "insert into user_list(jurisdiction, username, password) value($_POST[uJuri3], '$_POST[uname3]', '$newps')";
+					echo $sql;
+					mysqli_query($conn, $sql);
+					alertMsg("用户创建成功");
+					header("Location: #");
+				}
 			}
 		}
 		else {
 			alertMsg("权限不足");
 		}
 	}
+?>
+<table width = '100%' class = 'userinfo_table'>
+	<tr><th>uid</th><th>权限</th><th>角色名</th></tr>
+	<?php
+		if ($conn != null) {
+			$sql = "select * from user_list";
+			$query = mysqli_query($conn, $sql);
+			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+				echo "<tr><th>$row[uid]</th><th>$row[jurisdiction]</th><th>$row[username]</th></tr>";
+			}
+			mysqli_free_result($query);
+		}
+	?>
+</table>
 
+<?php
 	require_once("../html/bottom.html");
 ?>

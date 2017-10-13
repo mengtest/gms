@@ -65,6 +65,10 @@
 		<?php
 			$conn = GetDBByIndex($_SESSION[DBIndex]);
 			$serverId = GetServerId($_SESSION[DBIndex]);
+			if ($_POST[submitpm]) {
+				SubmitPM($conn, $serverId);
+			}
+
 			if ($conn && $_SESSION[DBIndex] > 0 && $serverId > 0) {
 				$now = time();
 				$sql = "select charname, accname, unblocktime, unforbidtalktime from charfulldata where worldid = '$serverId' and unblocktime > $now or unforbidtalktime > $now";
@@ -152,58 +156,53 @@
 		return $ret_val;
 	}
 
-	if ($_POST[submitpm]) {
+	function SubmitPM($conn, $serverId) {
 		if ($conn == null || $_SESSION[DBIndex] <= 0 || $serverId <= 0) {
 			alertMsg("请先选择服再操作");
-			exit();
 		}
-
-		if ($_POST[pm_some] == null) {
+		elseif ($_POST[pm_some] == null) {
 			alertMsg("请先选择玩家类型再操作");
-			exit();
 		}
-
-		if ($_POST[pm_some_op] == null) {
+		elseif ($_POST[pm_some_op] == null) {
 			alertMsg("请先选择类型再操作");
-			exit();
 		}
-
-		if ($_POST[pm_reason] == null) {
+		elseif ($_POST[pm_reason] == null) {
 			alertMsg("请先输入原因");
-			exit();
 		}
+		else
+		{
+			if ($_POST[pm_time] == null) {
+				$_POST[pm_time] = 0;
+			}
 
-		if ($_POST[pm_time] == null) {
-			$_POST[pm_time] = 0;
-		}
-
-		$op_player = '';
-		if ($_POST[pm_some] == 2) {
-			$sql = "select charname from charfulldata where worldid = '$serverId' and accname = '$_POST[pm_info]'";
-			$query = mysqli_query($conn, $sql);
-			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-				if (SetState($conn, $serverId, $row[charname], $_POST[pm_some_op], $_POST[pm_time], true)) {
-					if ($op_player == null) {
-						$op_player = "账号:".$_POST[pm_info]."-".$row[charname];
-					}
-					else {
-						$op_player .= "-".$row[charname];
+			$op_player = '';
+			if ($_POST[pm_some] == 2) {
+				$sql = "select charname from charfulldata where worldid = '$serverId' and accname = '$_POST[pm_info]'";
+				$query = mysqli_query($conn, $sql);
+				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					if (SetState($conn, $serverId, $row[charname], $_POST[pm_some_op], $_POST[pm_time], true)) {
+						if ($op_player == null) {
+							$op_player = "账号:".$_POST[pm_info]."-".$row[charname];
+						}
+						else {
+							$op_player .= "-".$row[charname];
+						}
 					}
 				}
 			}
-		}
-		else {
-			if (SetState($conn, $serverId, $_POST[pm_info], $_POST[pm_some_op], $_POST[pm_time], true)) {
-				$op_player = "角色名:".$_POST[pm_info];
+			else {
+				if (SetState($conn, $serverId, $_POST[pm_info], $_POST[pm_some_op], $_POST[pm_time], true)) {
+					$op_player = "角色名:".$_POST[pm_info];
+				}
 			}
-		}
 
-		if ($op_player) {
-			OnRecordOption($_SESSION[name], $typeName[$_POST[pm_some_op]]."-".$_POST[pm_time]."-原因:".$_POST[pm_reason], $_SESSION[DBIndex], $op_player);
-			alertMsg("操作成功 ".$op_player." 被".$typeName[$_POST[pm_some_op]]);
-		}
-		else {
-			alertMsg("角色不存在,操作失败");
+			if ($op_player) {
+				OnRecordOption($_SESSION[name], $GLOBALS[typeName][$_POST[pm_some_op]]."-".$_POST[pm_time]."-原因:".$_POST[pm_reason], $_SESSION[DBIndex], $op_player);
+				alertMsg("操作成功 ".$op_player." 被".$GLOBALS[typeName][$_POST[pm_some_op]]);
+			}
+			else {
+				alertMsg("角色不存在,操作失败");
+			}
 		}
 	}
 

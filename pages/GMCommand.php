@@ -5,18 +5,16 @@
 	require_once("../config/menu.php");
 
 	require_once("../script/check.php");
-	require_once("../config/DBList.php");
-	require_once("../script/optionrecord.php");
-	require_once("../script/selectserver.php");
 
-	$table_class = 'command_table';
-	require_once("../script/GMCommandTable.php");
-	
 	// 检测登陆状态
 	$checkVal = JurisdictionCheck(basename($_SERVER["PHP_SELF"]), $_SESSION[uid]);
 	if ($checkVal != 0) {
 		echo "<script language=javascript>alert('$error_notice[$checkVal]');history.back();</script>";
 	}
+
+	require_once("../config/DBList.php");
+	require_once("../script/optionrecord.php");
+	require_once("../script/selectserver.php");
 ?>
 
 <form action="" method="post" class = 'command_form2'>
@@ -37,17 +35,25 @@
 			alertMsg("请先选择服再操作");
 		}
 		else {
-			$sql = "insert into gmcommand(worldid, type, command, param) values('$serverId', '$_POST[type]', '$_POST[command]', '$_POST[param]')";
-			mysqli_query($conn, $sql);
-		
-			if ($_POST[type] == 1) {
-				OnRecordOptionGuid($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
+			if (empty($_POST[type]) || empty($_POST[command]) || empty($_POST[param])) {
+				alertMsg("请先填好信息");
 			}
 			else {
-				OnRecordOption($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
+				$sql = "insert into gmcommand(worldid, type, command, param) values('$serverId', '$_POST[type]', '$_POST[command]', '$_POST[param]')";
+				mysqli_query($conn, $sql);
+		
+				if ($_POST[type] == 1) {
+					OnRecordOptionGuid($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
+				}
+				else {
+					OnRecordOption($_SESSION[name], 'GM命令-'.$_POST[command], $_SESSION[DBIndex], $_POST[param]);
+				}
 			}
 		}
 	}
+
+	$table_class = 'command_table';
+	require_once("../script/GMCommandTable.php");
 
 	require_once("../html/bottom.html");
 ?>
