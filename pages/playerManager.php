@@ -47,14 +47,14 @@
 				?>
 			</select><br /><br />
 
-	时间：<input name="pm_time" type="text" /><br /><br />
+	时间：<input name="pm_time" type="text" title="时间必须是大于0的整数(小于5W是小时,大于5W是时间戳)" /><br /><br />
 
 	原因：<input name="pm_reason" type="text" style="height:50px" /><br /><br />
 
 	<input name="submitpm" type="submit" value="提交" /><br /><br />
 
 	<p>1.禁言或者封号才需要填时间</p>
-	<p>2.时间的值小于当前时间戳<br>代表禁言(或封号)到n小时后</p>
+	<p>2.时间的值小于5万<br>代表禁言(或封号)到n小时后<br>5万到当前时间戳的值无效</p>
 	<p>3.时间的值可以填写时间戳</p>
 	<p>4.原因必填(用于记录)</p>
 </form>
@@ -172,10 +172,14 @@
 		elseif ($_POST[pm_reason] == null) {
 			alertMsg("请先输入原因");
 		}
+		elseif (!is_numeric($_POST[pm_time]) || $_POST[pm_time] <= 0 || ($_POST[pm_time] > 50000 && $_POST[pm_time] < time())) {
+			alertMsg("请输入有效时间");
+		}
 		else
 		{
-			if ($_POST[pm_time] == null) {
-				$_POST[pm_time] = 0;
+			if ($_POST[pm_time] < 50000) {
+				// 转换成时间戳
+				$_POST[pm_time] = time() + $_POST[pm_time] * 3600;
 			}
 
 			$op_player = '';
@@ -199,8 +203,22 @@
 				}
 			}
 
+			$totalTime = $_POST[pm_time] - time();
+			$timeDay = floor($totalTime / (24 * 60 * 60));
+			$timeHour = ceil(($totalTime % (24 * 60 * 60)) / (60 * 60));
+			$recordContent = $GLOBALS[typeName][$_POST[pm_some_op]]."-";
+			if ($timeDay > 0) {
+				$recordContent .= $timeDay."天";
+			}
+
+			if ($timeHour > 0) {
+				$recordContent .= $timeHour."小时";
+			}
+
+			$recordContent .= "-原因:".$_POST[pm_reason];
+
 			if ($op_player) {
-				OnRecordOption($_SESSION[name], $GLOBALS[typeName][$_POST[pm_some_op]]."-".$_POST[pm_time]."-原因:".$_POST[pm_reason], $_SESSION[DBIndex], $op_player);
+				OnRecordOption($_SESSION[name], $recordContent, $_SESSION[DBIndex], $op_player);
 				alertMsg("操作成功 ".$op_player." 被".$GLOBALS[typeName][$_POST[pm_some_op]]);
 			}
 			else {
