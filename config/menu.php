@@ -5,7 +5,7 @@
 
 	// 修改menu只需改这个数组就ok
 	$menuArr = array(
-		'主页' => '', 
+		'主页' => host_addr, 
 		'操作记录' => 'record', 
 		'角色查询' => 'queryPlayer', 
 		'角色管理' => 'playerManager', 
@@ -25,8 +25,8 @@
 		$Juri = GetJurisdiction($paddr.'.php');
 
 		if ($Juri < 0 || ($_SESSION[uid] && $_SESSION[Juri] <= $Juri)) {
-			$href_addr = host_addr.$paddr;
-			echo "<li style = 'height: ".menu_height."%;'><a href='$href_addr' class = 'menufixed'>$pname</a></li>";
+			//$href_addr = host_addr.$paddr;
+			echo "<li style = 'height: ".menu_height."%;'><a href='$paddr' class = 'menufixed'>$pname</a></li>";
 		}
 	}
 
