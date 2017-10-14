@@ -4,6 +4,9 @@
 
 	$absolute_path = dirname(dirname(__FILE__));
 
+	// 设置默认时区为北京
+	date_default_timezone_set('PRC');
+
 	if ($_GET[requrl] == null) {
 		// 请求主页
 		require_once("$absolute_path/index.php");

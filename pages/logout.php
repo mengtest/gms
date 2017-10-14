@@ -4,7 +4,6 @@
 
 	// 只要执行就销毁一次session(无论有无)
 	session_start();
-	$reback_str = "<script language = 'JavaScript'> window.location.href='".host_addr."'; </script>";
-	echo $reback_str;
+	echo "<script language = 'JavaScript'> window.location.href='".host_addr."'; </script>";
 	session_destroy();
 ?>

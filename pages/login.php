@@ -43,8 +43,7 @@
 				$_SESSION[name] = $row[username];
 				$_SESSION[Juri] = $row[jurisdiction];
 
-				$echo_str = "<script language = 'JavaScript'> alert('登陆成功'); window.location.href='".host_addr."'; </script>";
-				echo $echo_str;
+				echo "<script language = 'JavaScript'> alert('登陆成功'); window.location.href='".host_addr."'; </script>";
 			}
 			else {
 				alertMsg("用户名或密码错误");

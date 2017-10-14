@@ -7,6 +7,18 @@
 
 <div class = 'select_div'>
 <?php
+	if ($_POST[submitlast]) {
+		if ($_SESSION[page] != null && $_SESSION[page] > 1) {
+			--$_SESSION[page];
+		}
+	}
+
+	if ($_POST[submitnext]) {
+		if ($_SESSION[page] != null && $_SESSION[totalPage] != null && $_SESSION[page] < $_SESSION[totalPage]) {
+			++$_SESSION[page];
+		}
+	}
+
 	if ($_SESSION[page] == null) {
 		$_SESSION[page] = 1;
 	}
@@ -91,19 +103,5 @@
 		}
 
 		$j++;
-	}
-
-	if ($_POST[submitlast]) {
-		if ($_SESSION[page] != null && $_SESSION[page] > 1) {
-			--$_SESSION[page];
-			echo "<script language = 'JavaScript'> location.reload() ; </script>";
-		}
-	}
-
-	if ($_POST[submitnext]) {
-		if ($_SESSION[page] != null && $_SESSION[totalPage] != null && $_SESSION[page] < $_SESSION[totalPage]) {
-			++$_SESSION[page];
-			echo "<script language = 'JavaScript'> location.reload() ; </script>";
-		}
 	}
 ?>

@@ -11,6 +11,15 @@
 	}
 
 	require_once("../config/DBList.php");
+
+	if ($_POST[submitrecord]) {
+		$_SESSION[rusername] = $_POST[reusername];
+		$_SESSION[roption] = $_POST[reoption];
+		$_SESSION[rserver] = $_POST[reserver];
+		$_SESSION[rplayer] = $_POST[replayer];
+		$_SESSION[rtime] = $_POST[retime];
+		$_SESSION[rlimit] = $_POST[relimit];
+	}
 ?>
 
 <form action="" method="post" class = 'record_form'>
@@ -78,44 +87,5 @@
 	}
 
 	require_once("../script/optionTable.php");
-
-	if ($_POST[submitrecord]) {
-		$flushPage = false;
-
-		if ($_SESSION[rusername] != $_POST[reusername]) {
-			$_SESSION[rusername] = $_POST[reusername];
-			$flushPage = true;
-		}
-
-		if ($_SESSION[roption] != $_POST[reoption]) {
-			$_SESSION[roption] = $_POST[reoption];
-			$flushPage = true;
-		}
-
-		if ($_SESSION[rserver] != $_POST[reserver]) {
-			$_SESSION[rserver] = $_POST[reserver];
-			$flushPage = true;
-		}
-
-		if ($_SESSION[rplayer] != $_POST[replayer]) {
-			$_SESSION[rplayer] = $_POST[replayer];
-			$flushPage = true;
-		}
-
-		if ($_SESSION[rtime] != $_POST[retime]) {
-			$_SESSION[rtime] = $_POST[retime];
-			$flushPage = true;
-		}
-
-		if ($_SESSION[rlimit] != $_POST[relimit]) {
-			$_SESSION[rlimit] = $_POST[relimit];
-			$flushPage = true;
-		}
-
-		if ($flushPage) {
-			echo "<script language = 'JavaScript'> location.reload() ; </script>";
-		}
-	}
-
 	require_once("../html/bottom.html");
 ?>

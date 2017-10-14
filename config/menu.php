@@ -31,4 +31,14 @@
 	}
 
 	echo "</ul></div>";
+
+	if ($_SESSION[name]) {
+		echo "<a href='user' class='rightfixed2'>$_SESSION[name]</a>";
+		echo "<a class='rightfixed' onclick='clickLogout()'>登出</a>";
+	}
+	else {
+		echo "<a href='login' class='rightfixed'>登陆</a>";
+	}
+
+	echo "<script language=javascript>function clickLogout() {var con = confirm('确定登出?');if (con) {self.location='logout'; }}</script>";
 ?>
