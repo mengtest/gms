@@ -7,6 +7,12 @@
 	// 设置默认时区为北京
 	date_default_timezone_set('PRC');
 
+	session_start();
+
+	if ($_SESSION[DBIndex] == null) {
+		$_SESSION[DBIndex] = 0;
+	}
+	
 	if ($_GET[requrl] == null) {
 		// 请求主页
 		require_once("$absolute_path/index.php");

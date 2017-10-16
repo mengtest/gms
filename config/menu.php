@@ -40,5 +40,10 @@
 		echo "<a href='login' class='rightfixed'>登陆</a>";
 	}
 
-	echo "<script language=javascript>function clickLogout() {var con = confirm('确定登出?');if (con) {self.location='logout'; }}</script>";
+	echo "<script language=javascript>
+		function clickLogout() {
+			var con = confirm('确定登出?');
+			if (con) {self.location='logout'; }
+		}
+		</script>";
 ?>
