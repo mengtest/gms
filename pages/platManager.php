@@ -139,10 +139,15 @@
 <?php
 	function ShowServerInfo($plat, $serverinfo) {
 		$subName = "del".$plat;
-		echo "<tr style='background-color:#ECECFF;'><th>$plat</th><th>-</th><th>-</th><th>-</th><th>-</th><th><input name='$subName' type='submit' value='删除' /></th></tr>";
+		$styleBG2 = "style='background-color:".line_bg_c2.";'";
+		echo "<tr $styleBG2><th>$plat</th><th>-</th><th>-</th><th>-</th><th>-</th><th><input name='$subName' type='submit' value='删除' /></th></tr>";
+
+		$i = line_bg_s;
 		foreach ($serverinfo as $index => $servername) {
+			$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
+			$i++;
 			$subSName = "sdel".$plat.$servername;
-			echo "<tr><td>$plat</td><td>$servername</td><td>".GetServerId($index)."</td><td>".GetDBAddrs($index)."</td><td>".GetDBSource($index)."</td><td><input name='$subSName' type='submit' value='删除' /></td></tr>";
+			echo "<tr $styleBG><td>$plat</td><td>$servername</td><td>".GetServerId($index)."</td><td>".GetDBAddrs($index)."</td><td>".GetDBSource($index)."</td><td><input name='$subSName' type='submit' value='删除' /></td></tr>";
 		}
 	}
 

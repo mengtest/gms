@@ -316,30 +316,17 @@
 		return $serverId;
 	}
 
-	function GetPlatName($index) {
-		$rPlatName = '';
+	function GetDBInfo($index, $key) {
+		$rVal = '';
 
 		if ($index <= 0) return '';
 
 		$servercfg = $GLOBALS[serverConfig][$index];
-		if ($servercfg && $servercfg['addr_s'] && $servercfg['platName']) {
-			$rPlatName = $servercfg['platName'];
+		if ($servercfg && $servercfg['addr_s'] && $servercfg['platName'] && $servercfg[$key]) {
+			$rVal = $servercfg[$key];
 		}
 
-		return $rPlatName;
-	}
-
-	function GetServerName($index) {
-		$rServerName = '';
-
-		if ($index <= 0) return '';
-
-		$servercfg = $GLOBALS[serverConfig][$index];
-		if ($servercfg && $servercfg['addr_s'] && $servercfg['serverName']) {
-			$rServerName = $servercfg['serverName'];
-		}
-
-		return $rServerName;
+		return $rVal;
 	}
 
 	function GetDBAddrs($index) {
