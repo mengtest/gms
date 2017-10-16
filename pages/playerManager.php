@@ -89,9 +89,9 @@
 
 				$bgi = line_bg_s;
 				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-					$styleBG = ($bgi % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
-					$bgi++;
 					if ($row[unblocktime] > $now) {
+						$styleBG = ($bgi % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
+						$bgi++;
 						$time = date("Y/m/d h:i:sa", $row[unblocktime]);
 						$subName = 'submitpmtb'.$i;
 						$unblockInfo[$i] = $row[charname];
@@ -106,6 +106,8 @@
 					}
 
 					if ($row[unforbidtalktime] > $now) {
+						$styleBG = ($bgi % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
+						$bgi++;
 						$time = date("Y/m/d h:i:sa", $row[unforbidtalktime]);
 						$subName = 'submitpmtf'.$j;
 						$unforbidtalkInfo[$j] = $row[charname];
