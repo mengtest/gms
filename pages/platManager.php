@@ -144,8 +144,8 @@
 
 		$i = line_bg_s;
 		foreach ($serverinfo as $index => $servername) {
-			$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
 			$i++;
+			$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
 			$subSName = "sdel".$plat.$servername;
 			echo "<tr $styleBG><td>$plat</td><td>$servername</td><td>".GetServerId($index)."</td><td>".GetDBAddrs($index)."</td><td>".GetDBSource($index)."</td><td><input name='$subSName' type='submit' value='删除' /></td></tr>";
 		}
