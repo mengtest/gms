@@ -53,7 +53,7 @@
 
 	<input name="submitpm" type="submit" value="提交" /><br /><br />
 
-	<p>1.禁言或者封号才需要填时间</p>
+	<p>1.踢下线时间填1</p>
 	<p>2.时间的值小于5万<br>代表禁言(或封号)到n小时后<br>5万到当前时间戳的值无效</p>
 	<p>3.时间的值可以填写时间戳</p>
 	<p>4.原因必填(用于记录)</p>
@@ -175,7 +175,7 @@
 			alertMsg("请先输入原因");
 		}
 		elseif (!is_numeric($_POST[pm_time]) || $_POST[pm_time] <= 0 || ($_POST[pm_time] > 50000 && $_POST[pm_time] < time())) {
-			alertMsg("请输入有效时间");
+			alertMsg("请输入有效的时间");
 		}
 		else
 		{
