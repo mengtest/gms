@@ -66,7 +66,7 @@
 
 			if ($_POST[notice_some]) {
 				// 选了服或者平台,不读服务器号了
-				if ($_POST[notice_some] == 0) {
+				if ($_POST[notice_some] == 1) {
 					foreach ($serverList as $plat => $idList) {
 						foreach ($idList as $serverid => $servername) {
 							SendNotice($serverid, $sqlFront, $sqlEnd);
