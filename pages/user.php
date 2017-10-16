@@ -19,7 +19,7 @@
 		$row = mysqli_fetch_array($query);
 
 		if ($row != null && $row[jurisdiction] == 0) {
-			echo "<a href='userInfo' class='rightfixed2'>角色权限设置</a>";
+			echo "<a href='userInfo' class='rightfixed3'>角色权限设置</a>";
 		}
 	}
 ?>
