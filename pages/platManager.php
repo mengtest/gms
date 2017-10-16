@@ -122,7 +122,7 @@
 
 <form action="" method="post">
 <table width = '100%' class = 'plat_table'>
-	<tr><th>平台名</th><th>服名称</th><th>操作</th></tr>
+	<tr><th>平台名</th><th>服名称</th><th>服id</th><th>链接地址</th><th>数据源</th><th>操作</th></tr>
 	<?php
 		if ($_SESSION[pplat_s]) {
 			ShowServerInfo($_SESSION[pplat_s], $serverList[$_SESSION[pplat_s]]);
@@ -139,10 +139,10 @@
 <?php
 	function ShowServerInfo($plat, $serverinfo) {
 		$subName = "del".$plat;
-		echo "<tr style='background-color:#ECECFF;'><th>$plat</th><th>-</th><th><input name='$subName' type='submit' value='删除' /></th></tr>";
+		echo "<tr style='background-color:#ECECFF;'><th>$plat</th><th>-</th><th>-</th><th>-</th><th>-</th><th><input name='$subName' type='submit' value='删除' /></th></tr>";
 		foreach ($serverinfo as $index => $servername) {
 			$subSName = "sdel".$plat.$servername;
-			echo "<tr><td>$plat</td><td>$servername</td><td><input name='$subSName' type='submit' value='删除' /></td></tr>";
+			echo "<tr><td>$plat</td><td>$servername</td><td>".GetServerId($index)."</td><td>".GetDBAddrs($index)."</td><td>".GetDBSource($index)."</td><td><input name='$subSName' type='submit' value='删除' /></td></tr>";
 		}
 	}
 

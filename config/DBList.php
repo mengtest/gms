@@ -341,4 +341,26 @@
 
 		return $rServerName;
 	}
+
+	function GetDBAddrs($index) {
+		$db_addrs = '';
+
+		$servercfg = $GLOBALS[serverConfig][$index];
+		if ($servercfg && $servercfg['addr_s']) {
+			$db_addrs = $servercfg['addr_s'];
+		}
+
+		return $db_addrs;
+	}
+
+	function GetDBSource($index) {
+		$db_source = '';
+
+		$servercfg = $GLOBALS[serverConfig][$index];
+		if ($servercfg && $servercfg['addr_s'] && $servercfg['DataSource']) {
+			$db_source = $servercfg['DataSource'];
+		}
+
+		return $db_source;
+	}
 ?>
