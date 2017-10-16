@@ -300,6 +300,9 @@
 			echo 'Could not connect:<br>' . mysqli_error();
 		}
 
+		// 设置数据库编码
+		mysqli_query($conn,'set names utf8');
+
 		return $conn;
 	}
 
