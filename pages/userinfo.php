@@ -5,11 +5,11 @@
 	require_once("../config/menu.php");
 	
 	// 检测登陆状态
-	require_once("../script/check.php");
+	/*require_once("../script/check.php");
 	$checkVal = JurisdictionCheck(basename($_SERVER["PHP_SELF"]), $_SESSION[uid]);
 	if ($checkVal != 0) {
 		ThrowError($checkVal);
-	}
+	}*/
 
 	require_once("../config/DBList.php");
 	require_once("../config/CommomConfig.php");
@@ -23,6 +23,9 @@
 
 		if ($row != null && $row[jurisdiction] == 0) {
 			$selfJuri = $row[jurisdiction];
+		}
+		else {
+			echo "<script language=javascript>self.location='user';</script>";
 		}
 	}
 ?>

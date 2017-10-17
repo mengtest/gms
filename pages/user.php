@@ -20,7 +20,7 @@
 
 		if ($row != null && $row[jurisdiction] == 0) {
 			//echo "<a href='userInfo' class='rightfixed3'>角色权限设置</a>";
-			echo "<script language=javascript>self.location='userInfo';</script>";
+			echo "<script language=javascript>self.location='userinfo';</script>";
 		}
 	}
 ?>
