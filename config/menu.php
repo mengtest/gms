@@ -34,7 +34,7 @@
 	echo "</ul></div>";
 
 	if ($_SESSION[name]) {
-		echo "<a href='user' class='rightfixed2'>$_SESSION[name]</a>";
+		echo "<a href='user' class='rightfixed2' id='user_name'>$_SESSION[name]</a>";
 		echo "<a class='rightfixed' onclick='clickLogout()'>登出</a>";
 	}
 	else {

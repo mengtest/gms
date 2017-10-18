@@ -23,6 +23,8 @@
 			echo "<script language=javascript>self.location='userinfo';</script>";
 		}
 	}
+
+	echo "<script language = 'JavaScript'>document.getElementById('user_name').style.display = 'none';</script>";
 ?>
 
 <form action="" method="post" class = 'changeps_form'>
