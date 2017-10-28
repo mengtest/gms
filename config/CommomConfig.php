@@ -6,7 +6,7 @@
 	define("host_addr", 'http://192.168.1.116:8550/gms/');
 
 	// 定义热云地址
-	define("hotcloud_addr", 'http://localhost:8550/gms/');
+	define("hotcloud_addr", 'http://game.reyun.com');
 
 	// 定义每行显示平台数
 	define("plat_num", 3);
