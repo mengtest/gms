@@ -1,4 +1,4 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteRule ^(.*)$ script/route.php?requrl=$1 [QSA,PT,L]
+RewriteRule ^((?!img/).*)$ script/route.php?requrl=$1 [QSA,PT,L]
 </IfModule>
