@@ -37,5 +37,5 @@
 		}
 	}
 
-	echo json_encode($ResInfo);
+	echo json_encode($ResInfo, JSON_UNESCAPED_UNICODE);
 ?>
