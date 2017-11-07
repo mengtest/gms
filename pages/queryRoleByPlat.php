@@ -28,7 +28,7 @@
 			$conn = GetDBByIndex($index);
 			$serverId = GetServerId($index);
 			if ($conn != null && $serverId > 0) {
-				$sql = "select * from charfulldata where worldid = $serverId and accname = '$_GET[accname]'";
+				$sql = "select * from charfulldata where worldid = $serverId and accname = '$_GET[accname]' and deletetime = 0";
 				$query = mysqli_query($conn, $sql);
 				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
 					AddResInfo($serverId, $row[charname], $row[profession], $row[level]);
