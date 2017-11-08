@@ -17,7 +17,7 @@
 			'sId' => $serverId,
 			'name' => $name,
 			'prof' => $prof,
-			'level' => $serverId
+			'level' => $level
 			);
 		array_push($GLOBALS[ResInfo]['data'], $tempInfo);
 		$GLOBALS[ResInfo]['count'] += 1;
