@@ -2,4 +2,19 @@
 	include_once("CommomConfig.php");
 ?>
 
-<iframe id="mainFrame" name="mainFrame" scrolling="no" src="http://game.reyun.com" frameborder="0" style="padding: 0px; width: 100%; height: 1000px;"></iframe>
+<iframe style="position:fixed; width:70%; height:88%;" id="iframeid" onload="SetCwinHeight()"  frameborder="0" src="http://game.reyun.com"></iframe>
+
+<script type="text/javascript">
+	function SetCwinHeight(){
+		var iframeid=document.getElementById("iframeid");
+		if (document.getElementById){
+			if (iframeid){
+				if (iframeid.contentDocument && iframeid.contentDocument.body.offsetHeight){
+					iframeid.height = iframeid.contentDocument.body.offsetHeight;
+				}else if(iframeid.Document && iframeid.Document.body.scrollHeight){
+					iframeid.height = iframeid.Document.body.scrollHeight;
+				}
+			}
+		}
+	}
+</script>
