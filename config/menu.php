@@ -12,12 +12,13 @@
 		'系统通告' => 'systemNotice', 
 		'发送邮件' => 'sendMail', 
 		'物品发放' => 'sendItem', 
+		'机器人' => 'robotManager',
 		'GM命令' => 'GMCommand', 
 		'平台管理' => 'platManager',
 		);
 
-	$hot_cloud_addr = hotcloud_addr;
-	echo "<div class = 'hotcloud_fixed'><a href = '$hot_cloud_addr'>前往热云</a></div>";
+	//$hot_cloud_addr = hotcloud_addr;
+	echo "<div class = 'hotcloud_fixed'><a href = 'reyun'>前往热云</a></div>";
 
 	$styleBG2 = "style='background-color:".menu_bg_c.";'";
 	echo "<div class = 'leftfixed' $styleBG2><ul style='position: absolute; height: 100%;'>";
