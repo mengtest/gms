@@ -18,7 +18,7 @@
 		);
 
 	$hot_cloud_addr = hotcloud_addr;
-	echo "<div class = 'hotcloud_fixed'><a href = '$hot_cloud_addr'>前往热云</a></div>";
+	echo "<div class = 'hotcloud_fixed'><a href = '$hot_cloud_addr' target='_blank'>前往热云</a></div>";
 
 	$styleBG2 = "style='background-color:".menu_bg_c.";'";
 	echo "<div class = 'leftfixed' $styleBG2><ul style='position: absolute; height: 100%;'>";
