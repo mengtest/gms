@@ -110,7 +110,7 @@
 		foreach ($_SESSION[ROBOT_SUB_ARRAY] as $key => $value) {
 			if ($_POST[$value]) {
 				// 删除
-				$param = explode("_", $value); 
+				$param = explode("_", $value);
 				if ($param[1] > 0 && OnRobotOption($conns, $serverId, $param[1], 0, 0, 0, 0, 0)) {
 					//SendAlertMsg(1, $param[1], $param[2], $param[3], $param[4], $param[5]);
 					OnRecordOption($_SESSION[name], '删除机器人-'.$param[1], $_SESSION[DBIndex], "无");
@@ -120,22 +120,31 @@
 	}
 
 	echo "<form action='' method='post'><table width = '100%' class = 'robot_table'>
-		<tr><th>场景</th><th>数量</th><th>状态</th><th>删除时间</th><th>插入时间</th><th>操作</th></tr>";
+		<tr><th>场景</th><th>数量</th><th>状态</th><th>插入时间</th><th>操作时间</th><th>操作</th></tr>";
 		if ($conns != null && $_SESSION[DBIndex] > 0 && $serverId > 0) {
-			$sqls = "select * from robottest";
+			$sqls = "select * from robertcmds";
 			$query = mysqli_query($conns, $sqls);
 			$i = line_bg_s;
 			$_SESSION[ROBOT_SUB_ARRAY] = array();
 			while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
 				$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
-				$stateName = ($row[state] == 1 ? "已插入" : "等待插入");
-				$subName = "rsub_".$row[id];
-				$subValue = ($row[state] == 1 ? "删除" : "取消");
-				$residueTime = ($row[end] > 0 ? (date("Y/m/d h:i:sa", $row[end])) : "无");
-				$runTime = date("Y/m/d h:i:sa", $row[start]);
+
+				if ($row[isOnline] == 1) {
+					$stateName = "已插入";
+					$subValue = "删除";
+					$residueTime = "无";
+				}
+				else {
+					$stateName = "等待插入";
+					$subValue = "取消";
+					$residueTime = date("Y/m/d h:i:sa", $row[addTime]);
+				}
+
+				$subName = "rsub_".$row[cmdID];
+				$runTime = date("Y/m/d h:i:sa", $row[cmdTime]);
 				$optionInfo = "<input name='$subName' type='submit' value='$subValue' />";
 				if ($conn) {
-					$sql = "select * from option_record where `option` = '删除机器人-".$row[id]."' order by id desc limit 1";
+					$sql = "select * from option_record where `option` = '删除机器人-".$row[cmdID]."' order by id desc limit 1";
 					$sQuery = mysqli_query($conn, $sql);
 					if ($sRow = mysqli_fetch_array($sQuery, MYSQLI_ASSOC)) {
 						$lastOptiomTime = strtotime($sRow[time]);
@@ -147,7 +156,7 @@
 				}
 
 				$i++;
-				echo "<tr $styleBG><td>$row[sceneid]</td><td>$row[count]</td><td>$stateName</td><td>$residueTime</td><td>$runTime</td><td>$optionInfo</td></tr>";
+				echo "<tr $styleBG><td>$row[sceneID]</td><td>$row[needAdd]</td><td>$stateName</td><td>$residueTime</td><td>$runTime</td><td>$optionInfo</td></tr>";
 
 				array_push($_SESSION[ROBOT_SUB_ARRAY], $subName);
 			}

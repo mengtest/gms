@@ -26,6 +26,7 @@ create table if not exists server_info
 	`duser` varchar(64) comment '数据库用户名',
 	`dpassword` varchar(64) comment '数据库密码',
 	`datasource` varchar(64) comment '数据源',
+	`datasource_log` varchar(64) comment '日志服数据源',
 	`platname` varchar(64) comment '平台名',
 	`servername` varchar(64) comment '服名',
 	`serverid` int comment '服id(worldid)'

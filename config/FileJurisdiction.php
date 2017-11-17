@@ -53,6 +53,26 @@
 			case 'platManager.php':
 				$jurisdiction = 0;
 				break;
+
+			// 道具记录(个人)
+			case 'itemRecordPerson.php':
+				$jurisdiction = 0;
+				break;
+
+			// 道具记录(全服)
+			case 'itemRecordAll.php':
+				$jurisdiction = 0;
+				break;
+
+			// 道具记录(来源)
+			case 'itemRecordSource.php':
+				$jurisdiction = 0;
+				break;
+
+			// 玩家操作记录
+			case 'playerRecord.php':
+				$jurisdiction = 0;
+				break;
 			
 			default:
 				break;

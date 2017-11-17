@@ -27,7 +27,7 @@
 
 	if ($_POST[submitplatinc] && $conn) {
 		if (empty($_POST[paddrs]) || empty($_POST[puser]) || empty($_POST[pps]) || empty($_POST[pds]) ||
-			empty($_POST[ppn]) || empty($_POST[psn]) || empty($_POST[psi])) {
+			empty($_POST[pdsl]) || empty($_POST[ppn]) || empty($_POST[psn]) || empty($_POST[psi])) {
 			alertMsg("请先填写所有信息");
 			exit();
 		}
@@ -42,12 +42,12 @@
 		$query = mysqli_query($conn, $sql);
 		if ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
 			// 数据已经存在,更新
-			$sql = "update server_info set addrs = '$_POST[paddrs]', duser = '$_POST[puser]', dpassword = '$_POST[pps]', datasource = '$_POST[pds]', serverid = $_POST[psi] where platname = '$_POST[ppn]' and servername = '$_POST[psn]'";
+			$sql = "update server_info set addrs = '$_POST[paddrs]', duser = '$_POST[puser]', dpassword = '$_POST[pps]', datasource = '$_POST[pds]', datasource_log = '$_POST[pdsl]',serverid = $_POST[psi] where platname = '$_POST[ppn]' and servername = '$_POST[psn]'";
 			$fResult = "更新 ";
 		}
 		else {
 			// 数据不存在,插入
-			$sql = "insert into server_info(addrs, duser, dpassword, datasource, platname, servername, serverid) value('$_POST[paddrs]', '$_POST[puser]', '$_POST[pps]', '$_POST[pds]', '$_POST[ppn]', '$_POST[psn]', $_POST[psi])";
+			$sql = "insert into server_info(addrs, duser, dpassword, datasource, datasource_log, platname, servername, serverid) value('$_POST[paddrs]', '$_POST[puser]', '$_POST[pps]', '$_POST[pds]', '$_POST[pdsl]', '$_POST[ppn]', '$_POST[psn]', $_POST[psi])";
 			$fResult = "新增 ";
 		}
 
@@ -96,7 +96,8 @@
  	地址：<input name="paddrs" type="text" title="数据库连接地址"/>
  	用户名：<input name="puser" type="text" title="数据库连接用户名"/>
  	密码：<input name="pps" type="text" title="数据库连接密码"/>
- 	数据源：<input name="pds" type="text" /><br /><br />
+ 	数据源：<input name="pds" type="text" />
+ 	日志数据源：<input name="pdsl" type="text" /><br /><br />
  	平台名：<input name="ppn" type="text" />
  	服名：<input name="psn" type="text" />
  	服id：<input name="psi" type="text" title="必须大于0"/>
@@ -122,7 +123,7 @@
 
 <form action="" method="post">
 <table width = '100%' class = 'plat_table'>
-	<tr><th>平台名</th><th>服名称</th><th>服id</th><th>链接地址</th><th>数据源</th><th>操作</th></tr>
+	<tr><th>平台名</th><th>服名称</th><th>服id</th><th>链接地址</th><th>数据源</th><th>日志数据源</th><th>操作</th></tr>
 	<?php
 		if ($_SESSION[pplat_s]) {
 			ShowServerInfo($_SESSION[pplat_s], $serverList[$_SESSION[pplat_s]]);
@@ -140,14 +141,14 @@
 	function ShowServerInfo($plat, $serverinfo) {
 		$subName = "del".$plat;
 		$styleBG2 = "style='background-color:".line_bg_c2.";'";
-		echo "<tr $styleBG2><th>$plat</th><th>-</th><th>-</th><th>-</th><th>-</th><th><input name='$subName' type='submit' value='删除' /></th></tr>";
+		echo "<tr $styleBG2><th>$plat</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th><input name='$subName' type='submit' value='删除' /></th></tr>";
 
 		$i = line_bg_s;
 		foreach ($serverinfo as $index => $servername) {
 			$i++;
 			$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
 			$subSName = "sdel".$plat.$servername;
-			echo "<tr $styleBG><td>$plat</td><td>$servername</td><td>".GetServerId($index)."</td><td>".GetDBAddrs($index)."</td><td>".GetDBSource($index)."</td><td><input name='$subSName' type='submit' value='删除' /></td></tr>";
+			echo "<tr $styleBG><td>$plat</td><td>$servername</td><td>".GetServerId($index)."</td><td>".GetDBAddrs($index)."</td><td>".GetDBSource($index)."</td><td>".GetLogDBSource($index)."</td><td><input name='$subSName' type='submit' value='删除' /></td></tr>";
 		}
 	}
 

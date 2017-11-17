@@ -235,6 +235,7 @@
 					'user' => $row[duser],
 					'password' => $row[dpassword],
 					'DataSource' => $row[datasource],
+					'DataSource_log' => $row[datasource_log],
 					'platName' => $row[platname],
 					'serverName' => $row[servername],
 					'serverId' => $row[serverid],
@@ -306,6 +307,25 @@
 		return $conn;
 	}
 
+	function GetLogDBByIndex($index) {
+		$conn = null;
+
+		$servercfg = $GLOBALS[serverConfig][$index];
+		if ($servercfg && $servercfg['addr_s'] && $servercfg['DataSource_log']) {
+			$conn = mysqli_connect($servercfg['addr_s'], $servercfg['user'], $servercfg['password']);
+			mysqli_select_db($conn, $servercfg['DataSource_log']);
+		}
+
+		if ($conn == null) {
+			echo 'Could not connect:<br>' . mysqli_error();
+		}
+
+		// 设置数据库编码
+		mysqli_query($conn,'set names utf8');
+
+		return $conn;
+	}
+
 	function GetServerId($index) {
 		$serverId = -1;
 
@@ -349,6 +369,17 @@
 		$servercfg = $GLOBALS[serverConfig][$index];
 		if ($servercfg && $servercfg['addr_s'] && $servercfg['DataSource']) {
 			$db_source = $servercfg['DataSource'];
+		}
+
+		return $db_source;
+	}
+
+	function GetLogDBSource($index) {
+		$db_source = '';
+
+		$servercfg = $GLOBALS[serverConfig][$index];
+		if ($servercfg && $servercfg['addr_s'] && $servercfg['DataSource_log']) {
+			$db_source = $servercfg['DataSource_log'];
 		}
 
 		return $db_source;
