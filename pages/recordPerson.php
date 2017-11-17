@@ -35,7 +35,7 @@
 		}
 
 		$startTime = strtotime($_POST[start_time]);
-		$endTime = strtotime($_POST[end_time]);
+		$endTime = strtotime($_POST[end_time]) + (24 * 60 * 60);
 		if ($startTime > $endTime) {
 			alertMsg("开始时间不能比结束时间大");
 			exit();
@@ -59,7 +59,7 @@
 			echo "<table width = '100%' class = 'item_r_table'>
 			<tr><th>类型</th><th>日志描述</th><th>时间</th></tr>";
 
-				$sql_log = "select * from itemlog where guid = $row[guid] and unix_timestamp(logtm) >= $startTime and unix_timestamp(logtm) <= $endTime";
+				$sql_log = "select * from itemlog where guid = $row[guid] and unix_timestamp(logtm) >= $startTime and unix_timestamp(logtm) <= $endTime order by unix_timestamp(logtm) desc";
 				$query_log = mysqli_query($conn_log, $sql_log);
 				$i = line_bg_s;
 				while ($row_log = mysqli_fetch_array($query_log, MYSQLI_ASSOC)) {
