@@ -338,4 +338,23 @@
 
 		return $RetInfo;
 	}
+
+	function GetLogDescribe($type, $param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '', $param6 = '', $param7 = '', $param8 = '') {
+		$Describe = "(".$type.")";;
+		switch ($type) {
+			case 2:
+			case 3:
+			case 4:
+				{
+					$Describe = "获得".$param2."个".$param3."(".$param1.")";
+				}
+				break;
+			
+			default:
+				$Describe = "未定义描述".$Describe;
+				break;
+		}
+
+		return $Describe;
+	}
 ?>

@@ -54,8 +54,8 @@
 				$jurisdiction = 0;
 				break;
 
-			// 道具记录(个人)
-			case 'itemRecordPerson.php':
+			// 个人记录
+			case 'recordPerson.php':
 				$jurisdiction = 0;
 				break;
 

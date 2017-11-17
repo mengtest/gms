@@ -1,5 +1,5 @@
 <?php
-	$Title = "这里是道具记录(个人)页";
+	$Title = "这里是个人记录页";
 	require_once("../html/header.html");
 	echo "<div class = 'shade_div5'></div>";
 	require_once("../config/menu.php");
@@ -57,7 +57,7 @@
 			</table>";
 
 			echo "<table width = '100%' class = 'item_r_table'>
-			<tr><th>获取途径</th><th>道具id</th><th>道具数量</th><th>对应消耗货币数量</th><th>时间</th></tr>";
+			<tr><th>类型</th><th>日志描述</th><th>时间</th></tr>";
 
 				$sql_log = "select * from itemlog where guid = $row[guid] and unix_timestamp(logtm) >= $startTime and unix_timestamp(logtm) <= $endTime";
 				$query_log = mysqli_query($conn_log, $sql_log);
@@ -83,8 +83,9 @@
 					$i++;
 
 					$Sourcr = GetLogTypeName($row_log[logtype]);
+					$Describe = GetLogDescribe($row_log[logtype], $row_log[itemid], $row_log[itemnum], "物品名");
 
-					echo "<tr $styleBG align='center'><td>$Sourcr</td><td>$row_log[itemid]</td><td>$row_log[itemnum]</td><td>$row_log[itemnum]</td><td>$row_log[logtm]</td></tr>";
+					echo "<tr $styleBG align='center'><td>$Sourcr</td><td>$Describe</td><td>$row_log[logtm]</td></tr>";
 				}
 
 			echo "</table>";
