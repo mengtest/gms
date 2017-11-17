@@ -93,6 +93,12 @@
 	}
 ?>
 
+<div style = "position:fixed; top:26%; left:21%; z-index:999;">
+	<a href = "itemRecordAll">道具记录(全服)</a>&nbsp;
+	<a href = "itemRecordSource">道具记录(来源)</a>&nbsp;
+	<a href = "playerRecord">玩家操作记录</a>
+</div>
+
 <form action="" method="post" class = 'item_r_form'>
  	开始时间：<input name="start_time" type="date" value="<?php echo $_SESSION[SIQ_startTime] ?>" />
  	结束时间：<input name="end_time" type="date" value="<?php echo $_SESSION[SIQ_endTime] ?>" />
