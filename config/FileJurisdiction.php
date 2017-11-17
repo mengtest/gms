@@ -59,18 +59,18 @@
 				$jurisdiction = 0;
 				break;
 
-			// 道具记录(全服)
+			// 道具统计
 			case 'itemRecordAll.php':
 				$jurisdiction = 0;
 				break;
 
-			// 道具记录(来源)
+			// 道具产出
 			case 'itemRecordSource.php':
 				$jurisdiction = 0;
 				break;
 
-			// 玩家操作记录
-			case 'playerRecord.php':
+			// 货币统计
+			case 'moneyRecord.php':
 				$jurisdiction = 0;
 				break;
 			

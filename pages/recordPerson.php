@@ -93,10 +93,11 @@
 	}
 ?>
 
-<div style = "position:fixed; top:26%; left:21%; z-index:999;">
-	<a href = "itemRecordAll">道具记录(全服)</a>&nbsp;
-	<a href = "itemRecordSource">道具记录(来源)</a>&nbsp;
-	<a href = "playerRecord">玩家操作记录</a>
+<div style = "position:fixed; top:26%; left:21%; ">
+	个人记录&nbsp;
+	<a href = "itemRecordAll">道具统计</a>&nbsp;
+	<a href = "itemRecordSource">道具产出</a>&nbsp;
+	<a href = "moneyRecord">货币统计</a>
 </div>
 
 <form action="" method="post" class = 'item_r_form'>
