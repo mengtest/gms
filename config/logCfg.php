@@ -1,5 +1,29 @@
 <?php
+	$MoneyType = array(
+		0 => "银两",
+		1 => "灵玉",
+		2 => "元宝",
+		3 => "银票",
+		);
+
+	// 物品来源类型列表
+	$ItemSourceTypeList = array(
+			5 => "新服奖励(首周)",
+			6 => "每日奖励",
+			7 => "在线奖励",
+			8 => "系统商店购买",
+			9 => "拾取",
+			10 => "GM指令给予",
+			11 => "里程碑奖励",
+			12 => "任务奖励",
+			13 => "接受送信任务给予",
+			14 => "采集任务给予",
+			22 => "从商店回购",
+			25 => "邮件提取获得",
+		);
+
 	function GetLogTypeName($LogTypeVal) {
+		// 物品类型总表
 		$logTypeInfo = array(
 			2 => "穿上装备",
 			3 => "取下装备",
@@ -339,6 +363,7 @@
 		return $RetInfo;
 	}
 
+	// 日志描述解析
 	function GetLogDescribe($type, $param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '', $param6 = '', $param7 = '', $param8 = '') {
 		$Describe = "(".$type.")";;
 		switch ($type) {
