@@ -1,9 +1,9 @@
-# gms
+﻿# gms
 php游戏系统后台
 
 需要aphche服务器
 	直接将该项目根目录拷贝到apache服务器下即可
-
+	
 配置目录:config
 	配置说明
 	menu.php				=>	配置菜单
@@ -16,7 +16,7 @@ php游戏系统后台
 	db/base.sql				=>	数据表创建(内含admin管理员)
 		初始用户名:admin
 		初始密码:admin
-
+		
 	db/test_data.sql		=>	平台服测试数据
 	
 //-------------------------------------------------------------------------------------------------------------------------------------
@@ -37,10 +37,9 @@ php游戏系统后台
 		AllowOverRide All
 
 安装php
-	yum-config-manager --enable remi-php70
 	yum -y install php php-opcache
 
-	安装依赖
+	安装依赖：
 	yum -y install php-mysql php-gd php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-soap curl curl-devel
 
 安装Mysql
