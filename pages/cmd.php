@@ -1,7 +1,9 @@
 <?php
-	$Title = "这里是cmd";
+	$Title = "这里是cmd页";
 	require_once("../html/header.html");
+	require_once("../config/menu.php");
 ?>
+
 <script language = 'JavaScript'>
 var is_scroll = true;
 var is_first = true;
@@ -20,22 +22,22 @@ window.onload = function(){
 	refresh();
 };
 </script>
+
 <?php
-	echo "<div >";
-	ob_end_flush ();
-	echo '<pre>';
+	echo "<div class = 'cmd_table'>";
+		ob_end_flush ();
+		echo "<pre>";
+			function root_exec($cmd, $ret=null)
+			{
+				//system('echo "zxc123qwe" | sudo -u www -S sh ../ssl.sh '.$cmd.' 2>&1', $ret);
+				system('sudo sh ../ssl.sh '.$cmd.' 2>&1', $ret);
+			}
 
-	function root_exec($cmd, $ret=null)
-	{
-		//system('echo "zxc123qwe" | sudo -u www -S sh ../ssl.sh '.$cmd.' 2>&1', $ret);
-		system('sh ../ssl.sh '.$cmd.' 2>&1', $ret);
-	}
-
-	if ($_POST[submit]) {
-		//root_exec("/3dmmo/Server ".$_POST[cmd]);
-		root_exec($_POST[option_type]." ".$_POST[param]);
-	}
-	echo '</pre>';
+			if ($_POST[submit]) {
+				//root_exec("/3dmmo/Server ".$_POST[cmd]);
+				root_exec($_POST[option_type]." ".$_POST[param]);
+			}
+		echo "</pre>";
 	echo "</div>";
 
 	$OptionType = array(
@@ -46,7 +48,8 @@ window.onload = function(){
 		"关闭服务器" =>"~ ls -a 2>&1",
 	);
 ?>
-<div style=" position:fixed; left:35%; top:15%; width:100%;">
+
+<div class = "cmd_form">
 <form action="" method="post">
  	<!--cmd：<input name="cmd" type="text" />-->
 	<select name="option_type">
@@ -60,6 +63,7 @@ window.onload = function(){
  	<input name="submit" type="submit" value="submit" />
 </form>
 </div>
+
 <?php
 	require_once("../html/bottom.html");
 ?>
