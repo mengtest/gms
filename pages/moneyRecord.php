@@ -1,5 +1,5 @@
 <?php
-	$Title = "这里是个人记录页";
+	$Title = "这里是货币统计页";
 	require_once("../html/header.html");
 	echo "<div class = 'shade_div'></div>";
 	require_once("../config/menu.php");
@@ -76,7 +76,7 @@
 
 <div style = "position:fixed; top:26%; left:21%; ">
 	<a href = "recordPerson">个人记录</a>&nbsp;
-	<a href = "itemRecordAll">道具统计</a>&nbsp;
+	<a href = "itemRecordAll">道具购买统计</a>&nbsp;
 	<a href = "itemRecordSource">道具产出</a>&nbsp;
 	货币统计
 </div>

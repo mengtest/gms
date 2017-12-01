@@ -40,7 +40,7 @@
 				$_SESSION[SIS_endTime] = $_POST[end_time];
 				$_SESSION[SIS_item_id] = $_POST[item_id];
 
-				$sql = "select * from itemlog where ('$_POST[item_id]' = '' or itemid = '$_POST[item_id]')";
+				$sql = "select * from itemlog where itemnum > 0 and ('$_POST[item_id]' = '' or itemid = '$_POST[item_id]')";
 				if (count($ItemSourceTypeList) > 0) {
 					$sql .= "and (";
 					$bIsFirst = true;
@@ -75,7 +75,7 @@
 
 <div style = "position:fixed; top:26%; left:21%;">
 	<a href = "recordPerson">个人记录</a>&nbsp;
-	<a href = "itemRecordAll">道具统计</a>&nbsp;
+	<a href = "itemRecordAll">道具购买统计</a>&nbsp;
 	道具产出&nbsp;
 	<a href = "moneyRecord">货币统计</a>
 </div>
