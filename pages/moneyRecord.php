@@ -45,9 +45,10 @@
 
 				$result = array();
 				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					if ($row[itemnum] <= 0) continue;
+
 					$logType = $row[logtype];
 					$moneyValue = $row[numbefore] - $row[numafter];
-					if ($moneyValue <= 0) continue;
 
 					if (!$result[$logType]) {
 						// 新增
