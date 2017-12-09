@@ -78,7 +78,7 @@
 							$i++;
 
 							$Sourcr = GetLogTypeName($row_log[logtype]);
-							$Describe = GetLogDescribe($row_log[logtype], $row_log[itemid], $row_log[itemnum], $row_log[itemname]);
+							$Describe = GetLogDescribe(1, $row_log[logtype], $row_log[itemid], $row_log[itemnum], $row_log[itemname]);
 
 							echo "<tr $styleBG align='center'><td>$Sourcr</td><td>$Describe</td><td>$row_log[logtm]</td></tr>";
 						}
@@ -106,8 +106,8 @@
 							$i++;
 
 							$Sourcr = GetLogTypeName($row_log2[logtype]);
-							$moneyvalue = $row[numbefore] - $row[numafter];
-							$Describe = GetLogDescribe($row_log2[logtype], $row_log2[itemid], $row_log2[itemnum], $row_log2[itemname], $row_log2[moneytype], $moneyvalue);
+							$moneyvalue = $row_log2[numafter] - $row_log2[numbefore];
+							$Describe = GetLogDescribe(2, $row_log2[logtype], $row_log2[itemid], $row_log2[itemnum], $row_log2[itemname], $row_log2[moneytype], $moneyvalue);
 
 							echo "<tr $styleBG align='center'><td>$Sourcr</td><td>$Describe</td><td>$row_log2[logtm]</td></tr>";
 						}
@@ -135,7 +135,7 @@
 							$i++;
 
 							$Sourcr = GetLogTypeName($row_log3[logtype]);
-							$Describe = GetLogDescribe($row_log3[logtype], $row_log3[intparam1], $row_log3[intparam2], $row_log3[intparam3], $row_log3[intparam4], $row_log3[intparam5], $row_log3[floatparam1], $row_log3[floatparam2], $row_log3[floatparam3], $row_log3[floatparam4], $row_log3[floatparam5], $row_log3[strparam1], $row_log3[strparam2], $row_log3[strparam3], $row_log3[strparam4], $row_log3[strparam5]);
+							$Describe = GetLogDescribe(3, $row_log3[logtype], $row_log3[intparam1], $row_log3[intparam2], $row_log3[intparam3], $row_log3[intparam4], $row_log3[intparam5], $row_log3[floatparam1], $row_log3[floatparam2], $row_log3[floatparam3], $row_log3[floatparam4], $row_log3[floatparam5], $row_log3[strparam1], $row_log3[strparam2], $row_log3[strparam3], $row_log3[strparam4], $row_log3[strparam5]);
 
 							echo "<tr $styleBG align='center'><td>$Sourcr</td><td>$Describe</td><td>$row_log3[logtm]</td></tr>";
 						}

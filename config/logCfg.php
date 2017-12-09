@@ -351,7 +351,7 @@
 	}
 
 	// 日志描述解析
-	function GetLogDescribe($type, $param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '', $param6 = '', $param7 = '', $param8 = '', $param9 = '', $param10 = '', $param11 = '', $param12 = '', $param13 = '', $param14 = '', $param15 = '') {
+	function GetLogDescribe($logType, $type, $param1 = '', $param2 = '', $param3 = '', $param4 = '', $param5 = '', $param6 = '', $param7 = '', $param8 = '', $param9 = '', $param10 = '', $param11 = '', $param12 = '', $param13 = '', $param14 = '', $param15 = '') {
 		$Describe = "(".$type.")";
 
 		$ConsumeType = array(
@@ -363,10 +363,33 @@
 			5 => "夺宝积分",
 		);
 
+		/*--------------------------
+		** logType
+		** 1 => itemlog
+		** 2 => momeylog
+		** 3 => commonlog
+		 --------------------------*/
+
 		switch ($type) {
 			case 70:
 				{
-					$Describe = "在易市花费".$param4.$ConsumeType[$param3]."购买了".$param2."个".$param1;
+					switch ($logType) {
+						case 1:
+							//$Describe = "在易市花费".$param3.$ConsumeType[$param4]."购买了".$param2."个".$param3;
+							break;
+
+						case 2:
+							$Describe = "在易市花费".(-$param5).$ConsumeType[$param4]."购买了".$param2."个".$param3;
+							break;
+
+						case 3:
+							$Describe = "在易市花费".$param4.$ConsumeType[$param3]."购买了".$param2."个".$param1;
+							break;
+						
+						default:
+							# code...
+							break;
+					}
 				}
 				break;
 
@@ -379,6 +402,12 @@
 			case 105:
 				{
 					$Describe = "在夺宝积分花费".$param4.$ConsumeType[$param3]."购买了".$param2."个".$param1;
+				}
+				break;
+
+			case 10061:
+				{
+					$Describe = "获得 $param5 $ConsumeType[$param4]";
 				}
 				break;
 
