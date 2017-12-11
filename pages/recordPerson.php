@@ -54,7 +54,7 @@
 					echo "<table width = '100%' class = 'item_r_table'>
 					<tr><th>类型</th><th>日志描述</th><th>时间</th></tr>";
 
-						$sql_log = "select * from itemlog where guid = $row[guid] and unix_timestamp(logtm) >= $startTime and unix_timestamp(logtm) <= $endTime order by unix_timestamp(logtm) desc";
+						/*$sql_log = "select * from itemlog where guid = $row[guid] and unix_timestamp(logtm) >= $startTime and unix_timestamp(logtm) <= $endTime order by unix_timestamp(logtm) desc";
 						$query_log = mysqli_query($conn_log, $sql_log);
 						$i = line_bg_s;
 						while ($row_log = mysqli_fetch_array($query_log, MYSQLI_ASSOC)) {
@@ -110,7 +110,7 @@
 							$Describe = GetLogDescribe(2, $row_log2[logtype], $row_log2[itemid], $row_log2[itemnum], $row_log2[itemname], $row_log2[moneytype], $moneyvalue);
 
 							echo "<tr $styleBG align='center'><td>$Sourcr</td><td>$Describe</td><td>$row_log2[logtm]</td></tr>";
-						}
+						}*/
 
 						$sql_log3 = "select * from commonlog where guid = $row[guid] and unix_timestamp(logtm) >= $startTime and unix_timestamp(logtm) <= $endTime order by unix_timestamp(logtm) desc";
 						$query_log3 = mysqli_query($conn_log, $sql_log3);

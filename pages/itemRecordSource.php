@@ -53,7 +53,7 @@
 					echo "<tr $styleBG align='center'><td>$row[itemid]</td><td>$row[itemname]</td><td>$row[itemnum]</td><td>$Sourcr</td><td>$row[logtm]</td></tr>";
 				}
 
-				$sql1 = "select * from moneylog where itemnum > 0 and ('$_POST[item_id]' = '' or itemid = '$_POST[item_id]')";
+				/*$sql1 = "select * from moneylog where itemnum > 0 and ('$_POST[item_id]' = '' or itemid = '$_POST[item_id]')";
 				$query1 = mysqli_query($conn_log, $sql1);
 				while ($row1 = mysqli_fetch_array($query1, MYSQLI_ASSOC)) {
 					$styleBG = ($i % line_bg_l == 0) ? "style='background-color:".line_bg_c.";'" : "";
@@ -61,7 +61,7 @@
 
 					$Sourcr = GetLogTypeName($row1[logtype]);
 					echo "<tr $styleBG align='center'><td>$row1[itemid]</td><td>$row1[itemname]</td><td>$row1[itemnum]</td><td>$Sourcr</td><td>$row1[logtm]</td></tr>";
-				}
+				}*/
 			}
 		}
 	}
