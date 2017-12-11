@@ -13,6 +13,7 @@
 
 	require_once("../config/DBList.php");
 	require_once("../config/logCfg.php");
+	require_once("../config/logDescribe.php");
 	require_once("../script/selectserver.php");
 
 	if ($_POST[submitItemQuqry]) {
