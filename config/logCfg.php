@@ -441,7 +441,13 @@
 				}
 				break;
 
-			case 60011:
+			case 60100:
+				{
+					$Describe = "type：60100， $param1 ：消耗物品id， $param2 ：物品数量， $param3 : 使用之前等级 $param4 :使用之后等级";
+				}
+				break;
+
+			case 60101:
 				{
 					$Describe = "type：60101， $param1 :消耗物品id，$param2 :消耗物品数量，$param3 :使用之前的寿命，$param4 :使用之后的寿命";
 				}
